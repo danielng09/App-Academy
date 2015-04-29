@@ -11,18 +11,19 @@ class Board
 
   def initialize(grid = self.class.blank_grid)
     @grid = grid
-    populate_board
+    populate_board(:black)
   end
 
-  def populate_board
-
+  def populate_board(color)
+    pawn_index = 1
     @grid = @grid.map.with_index do |row, row_index|
-      row.map do |col|
-        if row_index == 1
-          Pawn.new(:black, [7,1], false, self)
+      row.map do |col, col_index|
+        if row_index == pawn_index
+          Pawn.new(:black, [row_index,col_index], false, self)
         end
       end
     end
+
 
   end
 
@@ -31,6 +32,7 @@ class Board
 
     @grid.each_with_index do |row, row_index|
       print "#{row_index} "
+      print " " if row_index == 1
       row.each_with_index do |col, col_index|
         if col.nil?
           print " _ "
