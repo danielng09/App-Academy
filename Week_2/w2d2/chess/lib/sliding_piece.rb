@@ -65,10 +65,6 @@ class SlidingPiece < Piece
     deltas
   end
 
-  def display
-
-  end
-
 end
 
 # board = Board.new
