@@ -12,14 +12,22 @@ class Board
   def initialize(grid = self.class.blank_grid)
     @grid = grid
     populate_board(:black)
+    populate_board(:white)
   end
 
   def populate_board(color)
-    pawn_index = 1
+    case color
+    when :black
+      pawn_index = 1
+    when :white
+      pawn_index = 6
+    end
     @grid = @grid.map.with_index do |row, row_index|
       row.map do |col, col_index|
         if row_index == pawn_index
-          Pawn.new(:black, [row_index,col_index], false, self)
+          Pawn.new(color, [row_index,col_index], false, self)
+        else
+          col
         end
       end
     end
