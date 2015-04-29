@@ -7,6 +7,11 @@ class SlidingPiece < Piece
     @type = type
   end
 
+#added this to explicitly show we are inheriting valid_moves method
+  def valid_moves
+    super
+  end
+
   def moves
     case @type
     when :rook
@@ -24,14 +29,14 @@ class SlidingPiece < Piece
   def explore(dir)
     y_diff = dir.first
     x_diff = dir.last
-    diff = []
+    deltas = []
     current = @pos.dup
     while current.all? { |ele| ele.between?(0,7) } && @board.grid[current.first][current.last].nil?
-      diff << current.dup
+      deltas << current.dup
       current[0] += y_diff
       current[1] += x_diff
     end
-    diff
+    deltas
   end
 
 end

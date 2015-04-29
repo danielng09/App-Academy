@@ -2,30 +2,31 @@ require_relative "piece.rb"
 
 class SteppingPiece < Piece
 
-  attr_reader :deltas
+#deleted delta attribute
   def initialize(color, pos, moved, board, type)
     super(color, pos, moved, board)
     @type = type
   end
 
-# 1) changed name is valid_moves
+
+# switched name of valid_moves and moves in this file to make them consister
+# -> moves are the movements you can make while valid_moves are the positions you can move to!
+# moved contents of valid_moves to the end of moves for consistentcy
   def valid_moves
-    case @type
-    when :knight
-      list = [[-2, -1], [-2, 1], [-1, -2], [-1, 2], [1, -2], [1, 2], [2, -1], [2, 1]]
-    when :king
-      list = [[0,1],[1,0],[-1,0],[0,-1],[1,1],[-1,-1],[-1,1],[1,-1]]
-    end
-    list
+    super
   end
 
-#added moves => maps valid moves onto the position and rejects positions outside board
+# moves should output all possible positions a piece can move to (without filtering for other pieces)
+# changed name is valid_moves & changed 'list' to 'deltas'
   def moves
-    valid_moves.each do |diff|
-      [diff.first + @pos.first, diff.last + @pos.last]
-    end.select do |position|
-      position.all? { |coordinate| coordinate.between?(0,7)}
+    case @type
+    when :knight
+      deltas = [[-2, -1], [-2, 1], [-1, -2], [-1, 2], [1, -2], [1, 2], [2, -1], [2, 1]]
+    when :king
+      deltas = [[0,1],[1,0],[-1,0],[0,-1],[1,1],[-1,-1],[-1,1],[1,-1]]
     end
+
+    super(deltas)
   end
 
 end
@@ -33,7 +34,3 @@ end
 board = Board.new
 knight = SteppingPiece.new(:black, [0, 0], false, board, :knight)
 p knight.moves
-
-#   + #move_diffs()
-  #  + King
-  #  + Knight

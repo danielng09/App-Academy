@@ -2,8 +2,6 @@ require_relative "board.rb"
 
 class Piece
 
-  attr
-
   def initialize(color, pos, moved, board)
     @color = color
     @pos = pos
@@ -11,7 +9,7 @@ class Piece
     @board = board
   end
 
-#must have method 'moves' to work
+#checks moves for objects in the way
   def valid_moves
     moves.reject do |index|
       other_piece = @board.grid[index.first][index.last]
@@ -23,20 +21,15 @@ class Piece
     end
   end
 
-  def explore(dir)
-    y_diff = dir.first
-    x_diff = dir.last
-    list = []
-    current = @pos.dup
-    while current.all? { |ele| ele.between?(0,7) } && @board.grid[current.first][current.last].nil?
-      list << current.dup
-      current[0] += y_diff
-      current[1] += x_diff
+#this just maps deltas from the original pos
+  def moves(deltas)
+    deltas.each do |diff|
+      [diff.first + @pos.first, diff.last + @pos.last]
+    end.select do |position|
+      position.all? { |coordinate| coordinate.between?(0,7)}
     end
-    list
   end
 
-
-
+# removed duplicate explore method that should exist in sliding_piece
 
 end
