@@ -45,8 +45,10 @@ attr_reader :rows
   end
 
   def show_board
-    output = @rows.map do |row|
-      row.map do |col|
+      print "    1  2  3  4  5  6  7  8  9 \n"
+    output = @rows.map.with_index do |row, row_index|
+      print " #{row_index.to_i + 1} "
+      row.map.with_index do |col, col_index|
         print "[#{col.determine_display}]"
       end
       print "\n"
@@ -54,9 +56,6 @@ attr_reader :rows
   end
 
   def won?
-  #return true
-  #condition 1 = if bombed? && flagged?
-  #condition 2 = if not bombed? then they should be revealed?
     @rows.each do |row|
       row.each do |ele|
         if !ele.bombed? && !ele.revealed?
@@ -86,11 +85,11 @@ attr_reader :rows
       response = gets.chomp
       if response == "reveal"
         puts "Enter the position you would like to reveal. Ex: '1, 2'"
-        position = gets.chomp.split(", ").map { |x| x.to_i }
+        position = gets.chomp.split(", ").map { |x| x.to_i - 1 }
         player.reveal(position)
       elsif response == "flag"
         puts "Enter the position you would like to flag. Ex: '1, 2'"
-        position = gets.chomp.split(", ").map { |x| x.to_i }
+        position = gets.chomp.split(", ").map { |x| x.to_i - 1 }
         player.flag(position)
       end
     end
