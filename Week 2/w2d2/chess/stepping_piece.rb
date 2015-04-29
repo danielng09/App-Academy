@@ -1,4 +1,4 @@
-require "/Users/appacademy/Desktop/working/w2d2/chess/piece.rb"
+require_relative "piece.rb"
 
 class SteppingPiece < Piece
 
@@ -8,8 +8,8 @@ class SteppingPiece < Piece
     @type = type
   end
 
-
-  def moves
+# 1) changed name is valid_moves
+  def valid_moves
     case @type
     when :knight
       list = [[-2, -1], [-2, 1], [-1, -2], [-1, 2], [1, -2], [1, 2], [2, -1], [2, 1]]
@@ -19,11 +19,20 @@ class SteppingPiece < Piece
     list
   end
 
+#added moves => maps valid moves onto the position and rejects positions outside board
+  def moves
+    valid_moves.each do |diff|
+      [diff.first + @pos.first, diff.last + @pos.last]
+    end.select do |position|
+      position.all? { |coordinate| coordinate.between?(0,7)}
+    end
+  end
+
 end
 
 board = Board.new
 knight = SteppingPiece.new(:black, [0, 0], false, board, :knight)
-p knight.valid_moves
+p knight.moves
 
 #   + #move_diffs()
   #  + King

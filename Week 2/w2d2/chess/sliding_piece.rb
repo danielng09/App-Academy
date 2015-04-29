@@ -1,15 +1,5 @@
 require_relative "piece.rb"
 
-# require "/Users/appacademy/Desktop/working/w2d2/chess/board.rb"
-# # require "/Users/appacademy/Desktop/working/w2d2/chess/game.rb"
-# # require "/Users/appacademy/Desktop/working/w2d2/chess/pawn.rb"
-# require "/Users/appacademy/Desktop/working/w2d2/chess/piece.rb"
-# # require "/Users/appacademy/Desktop/working/w2d2/chess/player.rb"
-# # require "/Users/appacademy/Desktop/working/w2d2/chess/sliding_piece.rb"
-# # require "/Users/appacademy/Desktop/working/w2d2/chess/stepping_piece.rb"
-
-
-
 class SlidingPiece < Piece
 
   def initialize(color, pos, moved, board, type)
@@ -34,14 +24,14 @@ class SlidingPiece < Piece
   def explore(dir)
     y_diff = dir.first
     x_diff = dir.last
-    list = []
+    diff = []
     current = @pos.dup
     while current.all? { |ele| ele.between?(0,7) } && @board.grid[current.first][current.last].nil?
-      list << current.dup
+      diff << current.dup
       current[0] += y_diff
       current[1] += x_diff
     end
-    list
+    diff
   end
 
 end
