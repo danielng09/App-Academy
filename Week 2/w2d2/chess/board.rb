@@ -50,5 +50,5 @@ class Board
 
 end
 
-game = Board.new
-p game.display
+# game = Board.new
+# p game.display

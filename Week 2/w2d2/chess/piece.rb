@@ -1,6 +1,7 @@
 require_relative "board.rb"
 
 class Piece
+  attr_reader :color
 
   def initialize(color, pos, moved, board)
     @color = color
@@ -23,13 +24,17 @@ class Piece
 
 #this just maps deltas from the original pos
   def moves(deltas)
-    deltas.each do |diff|
+    deltas.map do |diff|
       [diff.first + @pos.first, diff.last + @pos.last]
     end.select do |position|
-      position.all? { |coordinate| coordinate.between?(0,7)}
+      position.all? { |coordinate| coordinate.between?(0,7) }
     end
   end
 
 # removed duplicate explore method that should exist in sliding_piece
+
+  def moved?
+    @moved
+  end
 
 end
