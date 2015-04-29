@@ -5,6 +5,16 @@ class Pawn < Piece
 
   def valid_moves
     moves
+    @type = :pawn
+  end
+
+  def display
+    case @color
+    when :black
+      print "\u265F"
+    when :white
+      print "\u2659"
+    end
   end
 
 # create posible positions to move to
@@ -43,7 +53,7 @@ class Pawn < Piece
 
 end
 
-board = Board.new
-puts board.display
-rook = Pawn.new(:black, [7,1], false, board)
-p rook.valid_moves
+# board = Board.new
+# puts board.display
+# rook = Pawn.new(:black, [7,1], false, board)
+# p rook.valid_moves

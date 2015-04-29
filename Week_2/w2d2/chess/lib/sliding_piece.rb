@@ -7,6 +7,32 @@ class SlidingPiece < Piece
     @type = type
   end
 
+  def display
+    case @type
+    when :rook
+      case @color
+      when :black
+        print "\u265C"
+      when :white
+        print "\u2656"
+      end
+    when :bishop
+      case @color
+      when :black
+        print "\u265D"
+      when :white
+        print "\u2657"
+      end
+    when :queen
+      case @color
+      when :black
+        print "\u265B"
+      when :white
+        print "\u2655"
+      end
+    end
+  end
+
 #added this to explicitly show we are inheriting valid_moves method
   def valid_moves
     super
@@ -39,14 +65,18 @@ class SlidingPiece < Piece
     deltas
   end
 
+  def display
+
+  end
+
 end
 
-board = Board.new
-rook = SlidingPiece.new(:black, [4, 4], false, board, :rook)
+# board = Board.new
+# rook = SlidingPiece.new(:black, [4, 4], false, board, :rook)
 # current = [0,0]
 # p board.grid[current[0]][current[1]].nil?
 # p rook.rook_move("right")
-p rook.valid_moves
+# p rook.valid_moves
 
 # p queen.valid_moves
 # p queen.deltas

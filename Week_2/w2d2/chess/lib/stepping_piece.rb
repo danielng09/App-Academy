@@ -2,10 +2,30 @@ require_relative "piece.rb"
 
 class SteppingPiece < Piece
 
+
 #deleted delta attribute
   def initialize(color, pos, moved, board, type)
     super(color, pos, moved, board)
     @type = type
+  end
+
+  def display
+    case @type
+    when :knight
+      case @color
+      when :black
+        print "\u265E"
+      when :white
+        print "\u2658"
+      end
+    when :king
+      case @color
+      when :black
+        print "\u265A"
+      when :white
+        print "\u2654"
+      end
+    end
   end
 
 
@@ -30,7 +50,7 @@ class SteppingPiece < Piece
   end
 
 end
-
-board = Board.new
-knight = SteppingPiece.new(:black, [0, 0], false, board, :knight)
-p knight.moves
+#
+# board = Board.new
+# knight = SteppingPiece.new(:black, [0, 0], false, board, :knight)
+# p knight.moves
