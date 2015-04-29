@@ -1,6 +1,6 @@
-require_relative 'spec_helper'
-require_relative '../lib/board'
-require_relative '../lib/pieces'
+require 'spec_helper'
+require 'board'
+require 'piece'
 
 describe Slideable do
   let(:b) { Board.new(false) }

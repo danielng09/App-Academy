@@ -65,7 +65,7 @@ class Board
 
   end
 
-  def display
+  def display_board
     puts "   A  B  C  D  E  F  G  H"
 
     @grid.each_with_index do |row, row_index|
@@ -117,4 +117,4 @@ class Board
 end
 
 game = Board.new
-p game.display
+p game.display_board
