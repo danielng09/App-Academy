@@ -9,8 +9,9 @@ class Board
     Array.new(8) { Array.new(8) }
   end
 
-  def initialize(grid = Board.create_grid)
+  def initialize(grid = Board.create_grid, duplicate = false)
     @grid = grid
+    return true if duplicate
     populate_board(:white)
     populate_board(:red)
   end
@@ -79,44 +80,44 @@ class Board
   end
 
   def move(start_pos, end_pos)
-    current_piece = find_piece(start_pos)
-    place_piece(end_pos, current_piece)
+    current = find_piece(start_pos)
+    place_piece(end_pos, current)
+    delete(start_pos)
   end
 
   def delete(pos)
     self[pos] = nil
   end
 
+  def deep_dup
+    # debugger
+    board_copy = Board.new(Board.create_grid, true)
+    self.grid.flatten.compact.each do |piece|
+      Piece.new(piece.pos, piece.color, board_copy)
+    end
+    board_copy
+  end
+
+  def won?(color)
+    opposite = (color == :black) ? :black : :red
+    self.grid.flatten.compact.all? { |piece| piece.color == opposite }
+  end
+
 end
 
-board = Board.new
-board.display
-
-
-
-board.move([6,1], [2,1])
-board.delete([6,1])
-
-board.move([1,3],[2,3])
-board.delete([1,3])
-board.display
-
-
-current = board.find_piece([1,2])
-p "starting: #{current.pos}"
-# p "these are sliding moves : #{current.slide_moves}"
-# p "these are the hoppping moves: #{current.hop_moves}"
-p "these are all the possible moves #{current.hop_moves + current.slide_moves}"
-
-current.perform_jump([3,0])
-board.display
-
-p board.empty?([2,1])
-p board.empty?([1,2])
-
-# current = board.find_piece([1,1])
-# current.perform_slide([2,0])
-# current.perform_slide([3,1])
-# current.perform_slide([4,0])
-# current.perform_slide([5,1])
-# current.perform_slide([6,1])
+# board = Board.new
+# b1 = board[[6,3]]
+# b2 = board[[6,1]]
+#
+# #move
+# b1.perform_slide([5,4])
+# b1.perform_slide([4,3])
+# b1.perform_slide([3,4])
+# b1.perform_slide([2,3])
+#
+# b2.perform_slide([5,2])
+# b2.perform_slide([4,1])
+#
+# current = board[[1,4]]
+# current.perform_moves!([[3, 2], [5, 0]]) if current.valid_move_seq?([[3, 2], [5, 0]])
+# board.display

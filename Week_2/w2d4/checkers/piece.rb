@@ -1,12 +1,20 @@
-
+require 'byebug'
 class Piece
-
-  attr_reader :pos, :color, :king
+  attr_accessor :pos
+  attr_reader :color
 
   def initialize(pos, color, board)
     @pos, @color, @board = pos, color, board
     @king = false
     @board.place_piece(@pos, self)
+  end
+
+  def render_piece
+    if @color == :white
+      print kinged? ? "\u265B" : "\u2617" #"\u26AA"
+    elsif @color == :red
+      print kinged? ? "\u2655" : "\u2616" #"\u26AB".colorize(color => :blue)
+    end
   end
 
   UP_DIR = [
@@ -19,12 +27,16 @@ class Piece
     [1, 1]
   ]
 
+  def kinged?
+    @king
+  end
+
   def move_diffs
     return UP_DIR.concat(DOWN_DIR) if kinged?
     case @color
     when :white
       DOWN_DIR
-    when :black
+    when :red
       UP_DIR
     end
   end
@@ -92,16 +104,29 @@ class Piece
     end
   end
 
-  def render_piece
-    if @color == :white
-      print kinged? ? "\u265B" : "\u2617" #"\u26AA"
-    elsif @color == :red
-      print kinged? ? "\u2655" : "\u2616" #"\u26AB".colorize(color => :blue)
+  def perform_moves!(move_sequence)
+    if move_sequence.length == 1
+      perform_slide(move_sequence.first)
+    else
+      queue = move_sequence.dup
+      until queue.empty?
+        current_move = queue.shift
+        perform_jump(current_move)
+      end
     end
   end
 
-  def kinged?
-    @king
+  def valid_move_seq?(move_sequence)
+    begin
+    board_copy = @board.deep_dup
+    current_copy = board_copy[pos]
+    puts "checking the sequence"
+    current_copy.perform_moves!(move_sequence)
+    puts "This is true!!"
+    true
+    rescue
+      false
+    end
   end
 
 end
