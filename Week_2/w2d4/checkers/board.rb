@@ -15,16 +15,26 @@ class Board
     populate_board(:red)
   end
 
-  def place_piece(piece, pos)
-    grid[pos.first][pos.last] = piece
+  def [](pos)
+    x, y = pos
+    @grid[x][y]
+  end
+
+  def []=(pos, mark)
+    x, y = pos
+    @grid[x][y] = mark
+  end
+
+  def place_piece(pos, piece)
+    self[pos] = piece
   end
 
   def empty?(pos)
-    grid[pos.first][pos.last].nil?
+    self[pos].nil?
   end
 
   def find_piece(pos)
-     grid[pos.first][pos.last]
+     self[pos]
   end
 
   def self.on_board?(pos)
@@ -69,18 +79,20 @@ class Board
   end
 
   def move(start_pos, end_pos)
-    current = find_piece(start_pos)
-    place_piece(current, end_pos)
+    current_piece = find_piece(start_pos)
+    place_piece(end_pos, current_piece)
   end
 
   def delete(pos)
-    grid[pos.first][pos.last] = nil
+    self[pos] = nil
   end
 
 end
 
 board = Board.new
 board.display
+
+
 
 board.move([6,1], [2,1])
 board.delete([6,1])

@@ -6,7 +6,7 @@ class Piece
   def initialize(pos, color, board)
     @pos, @color, @board = pos, color, board
     @king = false
-    @board.place_piece(self, @pos)
+    @board.place_piece(@pos, self)
   end
 
   UP_DIR = [
@@ -50,20 +50,31 @@ class Piece
       @board.find_piece(pos).color == color
     end
 
-    hoppable_opponent.map { |start|
+    hoppable_opponent.map do |start|
       diff = [start.first - pos.first, start.last - pos.last]
       [start.first + diff.first, start.last + diff.last]
-    }
+    end
   end
 
   def perform_slide(end_pos)
      if slide_moves.include?(end_pos)
        @board.move(pos, end_pos)
-       @board.grid[pos.first][pos.last] = nil
+       @board.delete(pos)
        @pos = end_pos
      else
        raise "Not a valid slide move"
      end
+  end
+
+  def perform_jump(end_pos)
+    if hop_moves.include?(end_pos)
+      @board.move(pos, end_pos)
+      @board.delete(pos)
+      remove_hopped_piece(end_pos)
+      @pos = end_pos
+    else
+      raise "Not a valid hop move"
+    end
   end
 
   def remove_hopped_piece(end_pos)
@@ -72,14 +83,12 @@ class Piece
     @board.delete(hopped_pos)
   end
 
-  def perform_jump(end_pos)
-    if hop_moves.include?(end_pos)
-      @board.move(pos, end_pos)
-      @board.grid[pos.first][pos.last] = nil
-      remove_hopped_piece(end_pos)
-      @pos = end_pos
-    else
-      raise "Not a valid hop move"
+  def promote?
+    case color
+    when :white
+      pos.first == 7
+    when :red
+      pos.first == 0
     end
   end
 
