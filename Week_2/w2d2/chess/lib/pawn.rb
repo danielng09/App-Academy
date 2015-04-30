@@ -3,9 +3,11 @@ require_relative "piece.rb"
 class Pawn < Piece
   attr_reader :color
 
+  def initialize(color, pos, moved, board)
+    @type = :pawn
+  end
   def valid_moves
     moves
-    @type = :pawn
   end
 
   def display

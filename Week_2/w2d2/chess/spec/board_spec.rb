@@ -1,6 +1,6 @@
 require 'spec_helper'
 require 'board'
-require 'pieces'
+require 'piece'
 
 describe Board do
   subject(:b) { Board.new }
