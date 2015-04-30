@@ -28,6 +28,7 @@ class Board
       :knight => [[0,1],[0,6]]
     }
 
+#change row index of each value if color is white
     case color
     when :black
       pawn_index = 1
