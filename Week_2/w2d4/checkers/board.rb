@@ -1,3 +1,4 @@
+require "colorize"
 require_relative "piece.rb"
 
 class Board
@@ -90,7 +91,16 @@ board.display
 
 
 current = board.find_piece([1,2])
-p current.hop_moves
+p "starting: #{current.pos}"
+# p "these are sliding moves : #{current.slide_moves}"
+# p "these are the hoppping moves: #{current.hop_moves}"
+p "these are all the possible moves #{current.hop_moves + current.slide_moves}"
+
+current.perform_jump([3,0])
+board.display
+
+p board.empty?([2,1])
+p board.empty?([1,2])
 
 # current = board.find_piece([1,1])
 # current.perform_slide([2,0])

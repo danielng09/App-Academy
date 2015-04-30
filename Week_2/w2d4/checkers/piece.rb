@@ -1,3 +1,4 @@
+
 class Piece
 
   attr_reader :pos, :color, :king
@@ -65,15 +66,28 @@ class Piece
      end
   end
 
-  def perform_jump(end_pos)
+  def remove_hopped_piece(end_pos)
+    hopped_pos = [(end_pos.first + pos.first)/2, (end_pos.last + pos.last)/2]
+    # puts "pos: #{pos} : end_pos: #{end_pos} : hopped_pos: #{hopped_pos}"
+    @board.delete(hopped_pos)
+  end
 
+  def perform_jump(end_pos)
+    if hop_moves.include?(end_pos)
+      @board.move(pos, end_pos)
+      @board.grid[pos.first][pos.last] = nil
+      remove_hopped_piece(end_pos)
+      @pos = end_pos
+    else
+      raise "Not a valid hop move"
+    end
   end
 
   def render_piece
     if @color == :white
-      print kinged? ? "\u265B" : "\u2617"
+      print kinged? ? "\u265B" : "\u2617" #"\u26AA"
     elsif @color == :red
-      print kinged? ? "\u2655" : "\u2616"
+      print kinged? ? "\u2655" : "\u2616" #"\u26AB".colorize(color => :blue)
     end
   end
 
