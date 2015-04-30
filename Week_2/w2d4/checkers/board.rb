@@ -63,16 +63,18 @@ class Board
   def populate_board(color)
     case color
     when :white
-      rows = [0,1]
+      rows = [0,1,2]
       rows.each do |x|
         8.times do |y|
+          next if (y + x).even?
           Piece.new([x,y], color, self)
         end
       end
     when :red
-      rows = [6,7]
+      rows = [5,6,7]
       rows.each do |x|
         8.times do |y|
+          next if (y + x).even?
           Piece.new([x,y], color, self)
         end
       end
@@ -105,7 +107,7 @@ class Board
 
 end
 
-# board = Board.new
+board = Board.new
 # b1 = board[[6,3]]
 # b2 = board[[6,1]]
 #
@@ -120,4 +122,4 @@ end
 #
 # current = board[[1,4]]
 # current.perform_moves!([[3, 2], [5, 0]]) if current.valid_move_seq?([[3, 2], [5, 0]])
-# board.display
+board.display

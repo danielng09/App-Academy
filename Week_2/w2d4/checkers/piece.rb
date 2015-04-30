@@ -104,6 +104,14 @@ class Piece
     end
   end
 
+  def perform_moves(move_sequence)
+    if valid_move_seq?(move_sequence)
+      perform_moves!(move_sequence)
+    else
+      raise "InvalidMoveSequence"
+    end
+  end
+
   def perform_moves!(move_sequence)
     if move_sequence.length == 1
       perform_slide(move_sequence.first)
