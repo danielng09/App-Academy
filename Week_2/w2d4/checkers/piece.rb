@@ -1,7 +1,7 @@
 require 'byebug'
 class Piece
   attr_accessor :pos
-  attr_reader :color
+  attr_reader :color, :king
 
   def initialize(pos, color, board)
     @pos, @color, @board = pos, color, board
@@ -11,9 +11,9 @@ class Piece
 
   def render_piece
     if @color == :white
-      print kinged? ? "\u265B" : "\u2617" #"\u26AA"
+      king ? "\u265B".colorize(:color => :default) : "\u26AA".colorize(:color => :default) #"\u26AA"
     elsif @color == :red
-      print kinged? ? "\u2655" : "\u2616" #"\u26AB".colorize(color => :blue)
+      king ? "\u2655".colorize(:color => :black) : "\u26AB".colorize(:color => :default) #"\u26AB".colorize(color => :blue)
     end
   end
 
@@ -27,12 +27,17 @@ class Piece
     [1, 1]
   ]
 
-  def kinged?
-    @king
+  def kinged
+    case color
+    when :white
+      @king = true if pos.first == 7
+    when :red
+      @king = true if pos.first == 0
+    end
   end
 
   def move_diffs
-    return UP_DIR.concat(DOWN_DIR) if kinged?
+    return UP_DIR.concat(DOWN_DIR) if king
     case @color
     when :white
       DOWN_DIR
@@ -52,8 +57,8 @@ class Piece
     end
   end
 
-  def hop_moves
-    hoppable_opponent = move_diffs.map do |diff|
+  def jump_moves
+    jumpable_opponent = move_diffs.map do |diff|
       # puts "pos: #{pos} : diff: #{diff} : added: #{[diff.first + pos.first, diff.last + pos.first]}"
       [diff.first + pos.first, diff.last + pos.last]
     end.reject do |pos|
@@ -62,7 +67,7 @@ class Piece
       @board.find_piece(pos).color == color
     end
 
-    hoppable_opponent.map do |start|
+    jumpable_opponent.map do |start|
       diff = [start.first - pos.first, start.last - pos.last]
       [start.first + diff.first, start.last + diff.last]
     end
@@ -79,20 +84,20 @@ class Piece
   end
 
   def perform_jump(end_pos)
-    if hop_moves.include?(end_pos)
+    if jump_moves.include?(end_pos)
       @board.move(pos, end_pos)
       @board.delete(pos)
-      remove_hopped_piece(end_pos)
+      remove_jumped_piece(end_pos)
       @pos = end_pos
     else
-      raise "Not a valid hop move"
+      raise "Not a valid jump move"
     end
   end
 
-  def remove_hopped_piece(end_pos)
-    hopped_pos = [(end_pos.first + pos.first)/2, (end_pos.last + pos.last)/2]
-    # puts "pos: #{pos} : end_pos: #{end_pos} : hopped_pos: #{hopped_pos}"
-    @board.delete(hopped_pos)
+  def remove_jumped_piece(end_pos)
+    jumped_pos = [(end_pos.first + pos.first)/2, (end_pos.last + pos.last)/2]
+    # puts "pos: #{pos} : end_pos: #{end_pos} : jumped_pos: #{jumped_pos}"
+    @board.delete(jumped_pos)
   end
 
   def promote?
@@ -108,13 +113,17 @@ class Piece
     if valid_move_seq?(move_sequence)
       perform_moves!(move_sequence)
     else
-      raise "InvalidMoveSequence"
+      raise "Sorry, you can't make that move!"
     end
   end
 
   def perform_moves!(move_sequence)
     if move_sequence.length == 1
-      perform_slide(move_sequence.first)
+      begin
+        perform_slide(move_sequence.first)
+      rescue
+        perform_jump(move_sequence.first)
+      end
     else
       queue = move_sequence.dup
       until queue.empty?
@@ -128,9 +137,7 @@ class Piece
     begin
     board_copy = @board.deep_dup
     current_copy = board_copy[pos]
-    puts "checking the sequence"
     current_copy.perform_moves!(move_sequence)
-    puts "This is true!!"
     true
     rescue
       false

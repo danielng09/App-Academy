@@ -10,19 +10,28 @@ class Game
   def run
     board = Board.new
     @player1.board, @player2.board = board, board
-    round = 1
+    turn = 1
     while true
-      puts "This is round #{round}"
+      puts "\n"
+      puts "CHECKERS ROUND: #{turn/2}"
+      puts "\n"
 
-      @player1.do_turn
+      @player1.play
       break if board.won?(@player1.color)
+      turn += 1
 
-      puts "This is round #{round}"
-      @player2.do_turn
+      @player2.play
       break if board.won?(@player2.color)
 
-      round += 1
+      turn += 1
     end
+    if turn.odd?
+      winner = @player1.name
+    else
+      winner = @player2.name
+    end
+
+    puts "Congrats #{winner}, you won in #{turn/2} rounds!"
   end
 
 end
@@ -36,24 +45,52 @@ class HumanPlayer
     @name = name
   end
 
-  def do_turn
-    puts "It's your turn#{name}!"
+  def play
+    get_input
+    make_move
+
+  end
+
+  def make_move
+    begin
+    selected_piece = board.find_piece(@from)
+    selected_piece.perform_moves(@to)
+    rescue => e
+      if e
+        puts e.message
+      else
+        puts "You entered an invalid move sequence"
+      end
+      play
+    end
+  end
+
+  def get_input
+    board.display
+    print "\n"
+
+    puts "It's your turn, #{name}! You are #{color} color."
 
     begin
-    puts "Please enter the starting position of the piece you would like to move. Ex: 1, 1"
-    from = gets.chomp.intput.split(", ")
+      puts "Please enter the starting position of the piece you would like to move. Ex: A1"
+      input = gets.chomp
+      @from = HumanPlayer.parse_input(input)
 
-    puts "Please enter where you would like to move this piece. You may enter a sequence - Ex: '[2, 2] / [3, 3]'"
-    from = gets.chomp.intput.split(", ")
-    if from ==
+      puts "Please enter where you would like to move this piece. You may enter a sequence - Ex: 'B3, D5'"
+      input = gets.chomp.split(", ")
+      @to = input.map { |move| HumanPlayer.parse_input(move) }
+
+
     rescue
-      "You entered invalid positions, please try again!"
+        puts "Invalid move positions inputted"
       retry
     end
+  end
 
-    selected_piece = board.find_piece(from)
-    selected_piece
-
+  def self.parse_input(input)
+    col = input[0].ord - 65
+    row = 8 - input[1].to_i
+    [row, col]
   end
 
 end
@@ -61,3 +98,4 @@ end
 daniel = HumanPlayer.new("Daniel")
 carl = HumanPlayer.new("Carl")
 checkers = Game.new(daniel, carl)
+checkers.run

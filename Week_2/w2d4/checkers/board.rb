@@ -43,22 +43,28 @@ class Board
   end
 
   def display
-    # print "    A   B   C   D   E   F   G   H\n"
-    print "    0    1    2    3    4    5    6    7\n"
+    # print "    0    1    2    3    4    5    6    7\n"
     grid.each_with_index do |row, row_index|
-      print "#{row_index}   "
-      row.each do |col|
+      print "#{8 - row_index} "
+      row.each_with_index do |col, col_index|
         if col.nil?
-          print "--   "
+          print "    ".colorize(:background => bg_color(row_index, col_index))
         else
-          print "  #{col.render_piece}  "
-          # print col.display
+          print " #{col.render_piece}  ".colorize(:background => bg_color(row_index, col_index))
         end
       end
       print "\n"
     end
+    print   "   A  B  C  D  E  F  G  H\n"
 
   end
+
+  def bg_color(index1, index2)
+    (index1 + index2).odd? ? :light_black : :light_red
+  end
+
+  # [:black, :light_black, :red, :light_red, :green, :light_green,
+  #:yellow, :light_yellow, :blue, :light_blue, :magenta, :light_magenta, :cyan, :light_cyan, :white, :light_white, :default]
 
   def populate_board(color)
     case color
@@ -101,19 +107,43 @@ class Board
   end
 
   def won?(color)
-    opposite = (color == :black) ? :black : :red
+    opposite = (color == :white) ? :white : :red
     self.grid.flatten.compact.all? { |piece| piece.color == opposite }
   end
 
 end
 
-board = Board.new
-# b1 = board[[6,3]]
-# b2 = board[[6,1]]
+board = Board.new(Board.create_grid)
+board.display
+# Piece.new([1,1], :white, board)
+# Piece.new([2,2], :red, board)
+#
+# piece = board[[1, 1]]
+# piece.perform_moves([[3, 3]])
+# piece.perform_slide([4,2])
+# piece.perform_slide([5,3])
+# piece.perform_slide([6,2])
+# piece.perform_slide([7,1])
+#
+#
+# board.display
+#
+#
+# p board.won?(:white)
+
+
+# b1 = board[[5,2]]
+# b2 = board[[2,1]]
 #
 # #move
-# b1.perform_slide([5,4])
-# b1.perform_slide([4,3])
+# b1.perform_slide([4,1])
+# b1.perform_slide([3,2])
+#
+# board.display
+# p b2.jump_moves + b2.slide_moves
+# b2.perform_moves([[4,3]])
+# board.display
+
 # b1.perform_slide([3,4])
 # b1.perform_slide([2,3])
 #
@@ -122,4 +152,3 @@ board = Board.new
 #
 # current = board[[1,4]]
 # current.perform_moves!([[3, 2], [5, 0]]) if current.valid_move_seq?([[3, 2], [5, 0]])
-board.display
