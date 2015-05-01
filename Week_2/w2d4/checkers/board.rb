@@ -55,7 +55,7 @@ class Board
       end
       print "\n"
     end
-    print   "   A  B  C  D  E  F  G  H\n"
+    print   "    A   B   C   D   E   F   G   H \n"
 
   end
 
