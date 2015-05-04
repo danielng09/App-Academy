@@ -40,6 +40,16 @@ end
 def ford_films
   # List the films in which 'Harrison Ford' has appeared.
   execute(<<-SQL)
+  SELECT
+    m.title
+  FROM
+    movies AS m
+  INNER JOIN
+    castings AS c ON c.movie_id = m.id
+  INNER JOIN
+    actors AS a ON a.id = c.actor_id
+  WHERE
+    a.name = ('Harrison Ford')
   SQL
 end
 
@@ -48,12 +58,32 @@ def ford_supporting_films
   # role. [Note: the ord field of casting gives the position of the actor. If
   # ord=1 then this actor is in the starring role]
   execute(<<-SQL)
+  SELECT
+    m.title
+  FROM
+    movies AS m
+  INNER JOIN
+    castings AS c ON c.movie_id = m.id
+  INNER JOIN
+    actors AS a ON a.id = c.actor_id
+  WHERE
+    a.name = ('Harrison Ford') AND c.ord > 1
   SQL
 end
 
 def films_and_stars_from_sixty_two
   # List the title and leading star of every 1962 film.
   execute(<<-SQL)
+  SELECT
+    m.title, a.name
+  FROM
+    movies AS m
+  INNER JOIN
+    castings AS c ON c.movie_id = m.id
+  INNER JOIN
+    actors AS a ON c.actor_id = a.id
+  WHERE
+    m.yr = 1962 AND c.ord = 1;
   SQL
 end
 
@@ -61,6 +91,19 @@ def travoltas_busiest_years
   # Which were the busiest years for 'John Travolta'? Show the year and the
   # number of movies he made for any year in which he made at least 2 movies.
   execute(<<-SQL)
+  SELECT
+    m.yr, COUNT(m.title)
+  FROM
+    movies AS m
+  INNER JOIN
+    castings AS c ON c.movie_id = m.id
+  INNER JOIN
+    actors AS a ON c.actor_id = a.id
+  WHERE a.name = 'John Travolta'
+  GROUP BY
+    m.yr
+  HAVING
+    COUNT(m.title) >= 2;
   SQL
 end
 
@@ -68,6 +111,27 @@ def andrews_films_and_leads
   # List the film title and the leading actor for all of the films 'Julie
   # Andrews' played in.
   execute(<<-SQL)
+  SELECT
+    mov.title, act.name
+  FROM
+    (
+      SELECT
+        m.id, m.title
+      FROM
+        movies AS m
+      INNER JOIN
+        castings AS c ON c.movie_id = m.id
+      INNER JOIN
+        actors AS a ON c.actor_id = a.id
+      WHERE
+        a.name = 'Julie Andrews'
+    ) AS mov
+  INNER JOIN
+    castings AS cst ON cst.movie_id = mov.id
+  INNER JOIN
+    actors AS act ON cst.actor_id = act.id
+  WHERE
+    cst.ord = 1;
   SQL
 end
 
