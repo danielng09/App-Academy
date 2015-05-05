@@ -81,3 +81,23 @@ VALUES
   (1, NULL, 4, "You should take my course and find out."),
   (3, NULL, 3, "Because it's cheap and white paint looks good"),
   (4, NULL, 1, "I am lost too");
+
+INSERT INTO
+  question_likes (user_id, question_id)
+VALUES
+  (1, 1),
+  (1, 3),
+  (2, 2),
+  (4, 4),
+  (3, 2);
+
+-- .print 'users'
+-- SELECT * FROM users;
+-- .print 'questions'
+-- SELECT * FROM questions;
+-- .print 'question_follows'
+-- SELECT * FROM question_follows;
+-- .print 'replies'
+-- SELECT * FROM replies;
+-- .print 'question_likes'
+-- SELECT * FROM question_likes;
