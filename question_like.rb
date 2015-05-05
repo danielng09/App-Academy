@@ -1,4 +1,5 @@
-require_relative 'questionsdatabase'
+# require_relative 'questionsdatabase'
+
 class QuestionLike
   def self.all
     results = QuestionsDatabase.execute(<<-SQL)
@@ -11,7 +12,7 @@ class QuestionLike
   end
 
   def self.find_by_id(id)
-    results = QuestionsDatabase.instance.get_first_row(<<-SQL, id)
+    results = QuestionsDatabase.get_first_row(<<-SQL, id)
       SELECT
         *
       FROM
@@ -25,9 +26,9 @@ class QuestionLike
   attr_reader :id, :user_id, :question_id
 
   def initialize(options = {})
-    @id = options[id]
-    @user_id = options[user_id]
-    @question_id = options[question_id]
+    @id = options["id"]
+    @user_id = options["user_id"]
+    @question_id = options["question_id"]
   end
 
 end

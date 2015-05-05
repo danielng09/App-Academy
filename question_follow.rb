@@ -1,4 +1,5 @@
-require_relative 'questionsdatabase'
+# require_relative 'questionsdatabase'
+
 class QuestionFollow
   def self.all
     results = QuestionsDatabase.execute(<<-SQL)
@@ -7,11 +8,11 @@ class QuestionFollow
       FROM
         question_follows;
     SQL
-    results.map { |result| self.new(result)}
+    results.map { |result| QuestionFollow.new(result)}
   end
 
   def self.find_by_id(id)
-    results = QuestionsDatabase.instance.get_first_row(<<-SQL, id)
+    results = QuestionsDatabase.get_first_row(<<-SQL, id)
       SELECT
         *
       FROM
@@ -25,9 +26,14 @@ class QuestionFollow
   attr_reader :id, :question_id, :user_id
 
   def initialize(options = {})
-    @id = options[id]
-    @question_id = options[question_id]
-    @user_id = options[user_id]
+    @id = options["id"]
+    @question_id = options["question_id"]
+    @user_id = options["user_id"]
   end
 
 end
+
+# blah = QuestionFollow.all
+# p blah
+# er = QuestionFollow.find_by_id(1).class
+# p er
