@@ -26,7 +26,7 @@ end
 
 
 
-# EASY QUERY CHECKS
+  # EASY QUERY CHECKS
 # print Question.find_by_author_id(1)
 # blah = Question.all
 # p blah
@@ -44,3 +44,10 @@ end
 # p reply.parent_reply
 # reply_2 = Reply.find_by_id(1)
 # p reply_2.child_replies
+
+  # MEDIUM QUERY CHECKS
+# p QuestionFollow.followers_for_question_id(1)
+# p QuestionFollow.followed_questions_for_user_id(1)
+# p QuestionFollow.followed_questions_for_user_id(2)
+# p User.find_by_id(1).followed_questions
+# p QuestionFollow.followers_for_question_id(1)

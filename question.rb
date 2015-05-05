@@ -54,4 +54,7 @@ class Question
     all_replies.select { |reply| reply.question_id == @id }
   end
 
+  def followers
+    QuestionFollow.followers_for_question_id(@id)
+  end
 end
