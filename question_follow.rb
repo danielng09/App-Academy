@@ -59,7 +59,7 @@ class QuestionFollow
   end
 
   def self.most_followed_questions(n)
-    results = QuestionsDatabse.execute(<<-SQL, n)
+    results = QuestionsDatabase.execute(<<-SQL, n)
       SELECT
         question_id
       FROM
@@ -67,11 +67,11 @@ class QuestionFollow
       GROUP BY
         question_id
       ORDER BY
-        COUNT(user_id)
+        COUNT(user_id) DESC
       LIMIT
         ?
     SQL
-    print results
+    results.map { |result| Question.find_by_id(result["question_id"]) }
   end
 
   attr_reader :id, :question_id, :user_id

@@ -62,7 +62,10 @@ VALUES
   ("Why does my SQL not work?", "Please help", 4),
   ("Why does Kevin drink so much water?", "SOS there is no water left", 3),
   ("Why are apple earbuds white?", "I wish there was more color", 1),
-  ("Why am I here?", "I can't remember who I am", 2);
+  ("Why am I here?", "I can't remember who I am", 2),
+  ("What is cake?", "I don't know", 1),
+  ("How much wood coulda?", "Wood chuck chuck?", 1),
+  ("If a wood chuck could?", "Chuck wood?", 1);
 
 INSERT INTO
   question_follows (question_id, user_id)
@@ -86,18 +89,22 @@ INSERT INTO
   question_likes (user_id, question_id)
 VALUES
   (1, 1),
-  (1, 3),
   (2, 2),
   (4, 4),
-  (3, 2);
+  (3, 2),
+  (2, 5),
+  (4, 7),
+  (3, 6),
+  (1, 6),
+  (2, 6);
 
--- .print 'users'
--- SELECT * FROM users;
--- .print 'questions'
--- SELECT * FROM questions;
--- .print 'question_follows'
--- SELECT * FROM question_follows;
--- .print 'replies'
--- SELECT * FROM replies;
--- .print 'question_likes'
--- SELECT * FROM question_likes;
+.print 'users'
+SELECT * FROM users;
+.print 'questions'
+SELECT * FROM questions;
+.print 'question_follows'
+SELECT * FROM question_follows;
+.print 'replies'
+SELECT * FROM replies;
+.print 'question_likes'
+SELECT * FROM question_likes;

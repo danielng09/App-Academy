@@ -51,3 +51,21 @@ end
 # p QuestionFollow.followed_questions_for_user_id(2)
 # p User.find_by_id(1).followed_questions
 # p QuestionFollow.followers_for_question_id(1)
+
+  # HARD QUERY CHECKS
+# p QuestionFollow.most_followed_questions(1)
+# p QuestionLike.likers_for_question_id(2)
+# p QuestionLike.num_likes_for_question_id(2)
+# p QuestionLike.liked_questions_for_user_id(1)
+# p QuestionLike.most_liked_questions(4)
+# p User.find_by_id(2).average_karma
+
+User.new("fname" => "Hugh", "lname" => "Jackman").save
+results = QuestionsDatabase.execute(<<-SQL)
+
+  SELECT
+    *
+  FROM
+    users
+  SQL
+print results
