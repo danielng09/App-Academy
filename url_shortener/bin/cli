@@ -1,0 +1,33 @@
+require 'byebug'
+require 'launchy'
+
+
+puts "Input your email:"
+email = gets.chomp
+while true
+  puts "What do you want to do?"
+  puts "0. Create a shortened URL"
+  puts "1. Visit a shortened URL"
+  puts "2. Exit"
+  option = Integer(gets)
+    if option == 0
+      puts "Type in your long url"
+      long_url = gets.chomp
+      user = User.where(["email = ?", email]).first
+      print "THIS IS THE USER ID: "
+      puts user.id
+      url = ShortenedUrl.create_for_user_and_long_url!(user, long_url)
+      puts "#{url.short_url}"
+    elsif option == 1
+      puts "Type in the shortened URL"
+      short_url = gets.chomp
+      short_object = ShortenedUrl.where(["short_url = ?", short_url]).first
+      url = short_object.long_url
+      user = User.where(["email = ?", email]).first
+      Visit.record_visit!(user, short_object)
+      Launchy.open(url)
+      break
+    else
+      break
+  end
+end
