@@ -4,16 +4,15 @@ class ShortenedUrl < ActiveRecord::Base
   validates :long_url, :presence => true
 
   def self.random_code
-    code = SecureRandom::urlsafe_base64(12)
-    while ShortenedUrl.exists?(:short_url => code)
+    loop do
       code = SecureRandom::urlsafe_base64(12)
+      return code unless ShortenedUrl.exists?(:short_url => code)
     end
-    code
   end
 
   def self.create_for_user_and_long_url!(user, long_url)
-    code = self.random_code
-    self.create!(:submitter_id => user.id, :long_url => long_url, :short_url => code)
+    code = ShortenedUrl.random_code
+    ShortenedUrl.create!(:submitter_id => user.id, :long_url => long_url, :short_url => code)
   end
 
   belongs_to(
@@ -38,14 +37,14 @@ class ShortenedUrl < ActiveRecord::Base
   )
 
   def num_clicks
-    self.visits.count
+    visits.count
   end
 
   def num_uniques
-    self.visitors.count
+    visitors.count
   end
 
   def num_recent_uniques
-    self.visits.where(["created_at BETWEEN ? AND ?", 10.minutes.ago, Time.now]).count
+    visits.where(["created_at < ?", 10.minutes.ago]).count
   end
 end
