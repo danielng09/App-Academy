@@ -52,7 +52,15 @@ class SQLObject
   end
 
   def self.find(id)
-    
+    results = DBConnection.execute(<<-SQL, id: id)
+    SELECT
+      *
+    FROM
+      #{table_name}
+    WHERE
+      #{table_name}.id = :id;
+    SQL
+    self.new(results.first) unless results.empty?
   end
 
   def initialize(params = {})
@@ -69,18 +77,38 @@ class SQLObject
   end
 
   def attribute_values
-    # ...
+    attributes.values
   end
 
   def insert
-    # ...
+    num_cols = attribute_values.length
+    col_names = attributes.keys.join(", ")
+    question_marks = (["?"] * num_cols).join(", ")
+    DBConnection.execute(<<-SQL, *attribute_values)
+    INSERT INTO
+      #{self.class.table_name} (#{col_names})
+    VALUES
+      (#{question_marks});
+    SQL
+    value = DBConnection.last_insert_row_id
+    self.send("id=", value)
   end
 
   def update
-    # ...
+    sets = self.class.columns.map { |col| "#{col} = ?"}.join(", ")
+    input = attribute_values << id
+    # [2, "Matthew", "von Rubens", 1]
+    DBConnection.execute(<<-SQL, *input)
+    UPDATE
+      #{self.class.table_name}
+    SET
+      #{sets}
+    WHERE
+      id = ? ;
+    SQL
   end
 
   def save
-    # ...
+    id.nil? ? insert : update
   end
 end
