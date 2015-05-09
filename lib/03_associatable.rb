@@ -31,37 +31,30 @@ end
 
 class HasManyOptions < AssocOptions
   def initialize(name, self_class_name, options = {})
-    @foreign_key = "#{self_class_name.downcase}_id".to_sym
-    @primary_key = :id
-    @class_name = name.to_s.singularize.camelcase
-    options.each do |key, value|
-      instance_variable_set("@#{key}", value)
-    end
+    @foreign_key = options[:foreign_key] || "#{self_class_name.downcase}_id".to_sym
+    @primary_key = options[:primary_key] || :id
+    @class_name = options[:class_name] || name.to_s.singularize.camelcase
   end
 end
 
 module Associatable
   # Phase IIIb
   def belongs_to(name, options = {}) #take in association name
-    options = BelongsToOptions.new(name, options)
-
+    hash = BelongsToOptions.new(name, options)
     define_method(name) do
-      fk = self.send(options.foreign_key)
-      cn = options.model_class
+      fk = self.send(hash.foreign_key)
+      cn = hash.model_class
       output = cn.where(id: fk).first
     end
   end
 
   def has_many(name, options = {})
     define_method(name) do
-      options = HasManyOptions.new(name, self.class.to_s, options)
-      p options.class_name
-      p self
-      fk = self.send(options.foreign_key)
-      print "This is the fk: "
-      p fk
-      table = options.class_name.constantize
-      table.where(id: fk)
+      hash = HasManyOptions.new(name, self.class.to_s, options)
+      pk = self.send(hash.primary_key)
+      fkn = hash.foreign_key
+      table = hash.model_class
+      output = table.where(fkn => pk)
     end
   end
 

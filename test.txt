@@ -1,4 +1,0 @@
-INSERT INTO
-  cats (id, name, owner_id)
-VALUES
-  #{question_marks}
