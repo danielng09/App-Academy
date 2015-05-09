@@ -68,7 +68,7 @@ class SQLObject
     params.each do |key, value|
       att_name = key.to_sym
       raise "unknown attribute #{key}" unless cols.include?(att_name)
-      self.send("#{key}=", value)
+      self.send("#{att_name}=", value)
     end
   end
 
