@@ -8,6 +8,7 @@
 User.create!(name: 'Alfred')
   Contact.create!(user_id: 1, name: 'John', email: '2@2.2')
   ContactShare.create!(contact_id: 1, user_id: 2)
+  Favorite.create!(user_id: 1, contact_id: 1)
 
 User.create!(name: 'Bruce')
   Contact.create!(user_id: 2, name: 'Mom', email: '3@3.3')
