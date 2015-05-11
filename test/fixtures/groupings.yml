@@ -1,13 +1,12 @@
 # == Schema Information
 #
-# Table name: comments
+# Table name: groupings
 #
-#  id               :integer          not null, primary key
-#  body             :text             not null
-#  commentable_id   :integer          not null
-#  commentable_type :string           not null
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
+#  id         :integer          not null, primary key
+#  contact_id :integer          not null
+#  group_id   :integer          not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

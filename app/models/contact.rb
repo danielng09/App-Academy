@@ -16,6 +16,8 @@ class Contact < ActiveRecord::Base
   has_many :shared_users, through: :contact_shares, source: :user
   has_many :favorites, dependent: :destroy
   has_many :comments, as: :commentable
+  has_many :groupings
+  has_many :groups, through: :groupings
   validates :user_id, :name, :email, presence: true
   validates :email, uniqueness: { scope: :user_id }
 

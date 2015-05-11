@@ -15,4 +15,6 @@ class User < ActiveRecord::Base
   has_many :shared_contacts, through: :contact_shares, source: :contact
   has_many :favorites, dependent: :destroy
   has_many :comments, as: :commentable
+  has_many :groups
+  has_many :grouped_contacts, through: :groups, source: :grouped_contacts
 end
