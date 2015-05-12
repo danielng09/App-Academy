@@ -1,0 +1,9 @@
+<h1> <%= @cat.name %> </h1>
+
+<ul>
+<% @cat.attributes.each do |key, value| %>
+  <li><%= "#{key} : #{value} "%> </li>
+<% end %>
+</ul>
+
+<%= link_to "See other cats", cats_path %>
