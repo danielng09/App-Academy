@@ -1,5 +1,5 @@
 <h1> <%= @cat.name %> </h1>
-
+<%= link_to "Edit me!", edit_cat_url(@cat)%>
 <ul>
 <% @cat.attributes.each do |key, value| %>
   <li><%= "#{key} : #{value} "%> </li>

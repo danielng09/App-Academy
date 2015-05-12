@@ -1,3 +1,14 @@
+<% if @cat.persisted? %>
+  <% form_action = cat_url(@cat)
+     form_method = :patch
+     submit_text = "Edit Cat" %>
+<% else %>
+  <% form_action = cats_url
+     form_method = :post
+     submit_text = "Create Cat" %>
+<% end %>
+
+
 <% if flash[:errors] %>
   <ul>
     <% flash[:errors].each do |error| %>
@@ -14,18 +25,17 @@
   </p>
 
   <p>
-    Color
-    <% Cat::COLORS.each_with_index do |color, i| %>
-      <p>
-        <input
-          id="<%= i %>"
-          type="radio"
+    <label for="color">Color</label>
+    <select>
+      <% Cat::COLORS.each do |color| %>
+        <option
           name="cat[color]"
           value="<%=color%>"
-          <%="checked" if @cat.color == color%>>
-        <label for="<%= i %>"><%=color%></label>
-      </p>
-    <%end%>
+          <%="selected" if @cat.color == color%>
+        ><%=color%>
+        </option>
+      <%end%>
+    </select>
   </p>
 
   <p>
@@ -45,7 +55,7 @@
 
   <p>
     <label for="cat-birth-date">Birth Date</label>
-    <input type="text" name="cat[birth_date]" id="cat-birth-date" value="<%= cat.birth_date %>">
+    <input type="date" name="cat[birth_date]" id="cat-birth-date" value="<%= cat.birth_date %>">
   </p>
 
   <p>
