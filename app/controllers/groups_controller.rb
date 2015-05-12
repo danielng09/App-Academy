@@ -1,30 +1,32 @@
 class GroupsController < ApplicationController
   def index
-    render json: User.find(params[:user_id]).groups
+    @groups = User.find(params[:user_id]).groups
   end
 
   def show
-    render json: Group.find(params[:id])
+    @group = Group.find(params[:id])
   end
 
   def destroy
     group = Group.find(params[:id])
     group.destroy
-    render json: group
+    render json: :destroyed
   end
 
   def create
-    group = Group.new(group_params)
-    if group.save
-      render json: group
+    @group = User.find(params[:user_id]).groups.new(group_params)
+    # @group = Group.new(group_params)
+    # @group.user_id = params[:user_id]
+    if @group.save
+      render 'show.json.jbuilder'
     else
       render(
-        json: group.errors.full_messages, status: :unprocessable_entity
+        json: @group.errors.full_messages, status: :unprocessable_entity
       )
     end
   end
 
   def group_params
-    params.require[:group].permit(:user_id, :group_name)
+    params.require(:group).permit(:group_name)
   end
 end

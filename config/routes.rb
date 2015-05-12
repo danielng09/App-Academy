@@ -3,7 +3,8 @@ Rails.application.routes.draw do
     resources :contacts, only: [:index]
     resources :favorites, only: [:index]
     resources :comments, only: [:index]
-    resources :groups, only: [:index, :show, :destroy, :create]
+    resources :groups, only: [:destroy, :create]
+    resources :groups, only: [:index, :show], defaults: { format: :json }
   end
 
   resources :contacts, only: [:show, :update, :destroy, :create] do

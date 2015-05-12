@@ -8,7 +8,8 @@ class CommentsController < ApplicationController
   end
 
   def create
-    comment = Comment.new(comment_params)
+    @commentable = find_commentable
+    comment = @commentable.comments.new(comment_params)
     if comment.save
       render json: comment
     else

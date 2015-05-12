@@ -12,6 +12,6 @@
 class Group < ActiveRecord::Base
   belongs_to :user
   has_many :groupings
-  has_many :grouped_contacts, through: :groupings
+  has_many :grouped_contacts, through: :groupings, source: :contact
   validates :group_name, presence: true, uniqueness: { scope: :user_id }
 end
