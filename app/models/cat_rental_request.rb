@@ -47,6 +47,10 @@ class CatRentalRequest < ActiveRecord::Base
     overlapping_requests.where('status = ?', 'PENDING')
   end
 
+  def pending?
+    self.status == "PENDING"
+  end
+
   def pending_status
     self.status ||= "PENDING"
   end
