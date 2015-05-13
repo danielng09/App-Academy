@@ -17,6 +17,16 @@ class CatRentalRequestsController < ApplicationController
     end
   end
 
+  def approve
+    @request = CatRentalRequest.new(cat_rental_request_params)
+    @request.approve!
+  end
+
+  def deny
+    @request = CatRentalRequest.new(cat_rental_request_params)
+    @request.deny!
+  end
+
   private
 
   def cat_rental_request_params

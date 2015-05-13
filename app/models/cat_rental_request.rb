@@ -38,14 +38,28 @@ class CatRentalRequest < ActiveRecord::Base
   end
 
   def approved_overlapping_requests_validation
-     unless approved_overlapping_requests.empty?
-      errors[:base] << "No dice"
+    unless approved_overlapping_requests.empty? || status == "DENIED"
+      errors[:base] << "Someone has already requested this cat!"
     end
+  end
+
+  def overlapping_pending_requests
+    overlapping_requests.where('status = ?', 'PENDING')
   end
 
   def pending_status
     self.status ||= "PENDING"
   end
 
+  def approve!
+    CatRentalRequest.transaction do
+      self.update!(status: "APPROVED")
+      overlapping_pending_requests.each { |request| request.deny! }
+    end
+  end
+
+  def deny!
+    self.update!(status: "DENIED")
+  end
 
 end

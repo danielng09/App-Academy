@@ -8,7 +8,10 @@
 <h3>This cat has been requested for the following dates</h3>
 <ul>
 <% @cat.cat_rental_requests.order(:start_date).each do |request| %>
-  <li><%= "#{request.start_date} - #{request.end_date}"%> </li>
+  <li>
+    <%= "#{request.start_date} - #{request.end_date}"%>
+    <%= button_to "Aprove!", 
+  </li>
 <% end %>
 </ul>
 
