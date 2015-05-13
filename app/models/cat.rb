@@ -16,6 +16,7 @@ class Cat < ActiveRecord::Base
   validates :birth_date, :color, :name, :gender, :description, presence: true
   validate :color_validation
   validate :gender_validation
+  has_many :cat_rental_requests, dependent: :destroy
 
   COLORS = [
   'Yellow',
