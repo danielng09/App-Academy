@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       flash[:notice] = "You've successfully created a user!"
-      log_in!(@user)
+      log_in_user!(@user)
       redirect_to user_url(@user)
     else
       fail
@@ -26,14 +26,6 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     render :show
-  end
-
-  def update
-
-  end
-
-  def destroy
-
   end
 
   private

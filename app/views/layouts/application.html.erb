@@ -8,7 +8,8 @@
 </head>
 <body>
 <% if current_user %>
-  <p>You are currently signed in with <%= current_user.email %></p>
+  <p>Account: <%= current_user.email %></p>
+  <%= button_to "Sign Out", session_url, method: "delete" %>
 <% else %>
   <p> <%= link_to "Sign in!", new_session_url %>
 <% end %>

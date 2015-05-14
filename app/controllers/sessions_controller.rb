@@ -5,9 +5,12 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.find_by_credentials(session_params[:email], session_params[:password])
+    user = User.find_by_credentials(
+      params[:user][:email],
+      params[:user][:password]
+      )
     if user
-      log_in!(user)
+      log_in_user!(user)
       redirect_to user_url(user)
     else
       flash.now[:errors] = "Invalid user and password combination"
@@ -17,10 +20,9 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-
+    user = User.find_by_session_token(session[:session_token])
+    log_out_user!(user)
+    redirect_to users_url
   end
 
-  def session_params
-    params.require(:session).permit(:email, :password)
-  end
 end
