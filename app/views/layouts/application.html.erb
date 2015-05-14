@@ -7,6 +7,13 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+<% if current_user %>
+  <p>You are currently signed in with <%= current_user.email %></p>
+<% else %>
+  <p> <%= link_to "Sign in!", new_session_url %>
+<% end %>
+
+<% flash[:notice] %>
 
 <%= yield %>
 

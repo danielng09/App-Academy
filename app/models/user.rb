@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   validates :email, :password_digest, presence: true
   validates :email, uniqueness: true
   validates :password, length: { minimum: 6, allow_nil: true }
-  after_initialize :reset_session_token!
+  after_initialize :initialize_session_token
 
   attr_reader :password
 
@@ -41,6 +41,11 @@ class User < ActiveRecord::Base
      BCrypt::Password.new(self.password_digest).is_password?(password)
   end
 
+  def initialize_session_token
+    token = User.generate_session_token
+    self.session_token = token
+  end
+
   def reset_session_token!
     token = User.generate_session_token
     self.session_token = token
@@ -50,7 +55,8 @@ class User < ActiveRecord::Base
 
 #fill this method out later!
   def ensure_session_token
-
+    reset_session_token! if self.session_token.nil?
+    self.session_token
   end
 
 
