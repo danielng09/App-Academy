@@ -1,0 +1,19 @@
+<h1><%= @track.name %> Track</h1>
+
+<% @track.attributes.each do |key, value| %>
+  <p>
+    <%= "#{key}: #{value}" %>
+  </p>
+<% end %>
+
+<p>
+  <%= button_to "Edit", edit_track_url(@track), method: "get" %>
+</p>
+
+<p>
+  <%= button_to "Delete", track_url(@track), method: "delete" %>
+</p>
+
+<p>
+  <%= link_to "<< Album", album_url(@album) %>
+</p>

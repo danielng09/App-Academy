@@ -1,0 +1,60 @@
+<h1>Create a new track!</h1>
+
+<form action="<%= tracks_url %>" method="post">
+  <input type="hidden" name="_method" value="post">
+
+  <label for="track_name">Name</label>
+  <input type="text"
+         id="track_name"
+         name="track[name]"
+         value="<%= @track.name %>">
+
+<br>
+<br>
+
+<label for="track_album">Album</label>
+<select name ="track[album_id]" id="album_id">
+<% @albums.each do |album| %>
+  <option
+    <%= album.id == @album.id ? "selected" : "" %>
+    value="<%= album.id %>">
+    <%= album.name %>
+  </option>
+<% end %>
+</select>
+
+<br>
+<br>
+Track Type
+<input
+  type="radio"
+  name="track[track_type]"
+  value="regular"
+  id="track_type_regular"
+  <%= @track.track_type == "regular" ? "checked" : "" %>>
+<label for="track_type_regular">regular</label>
+
+<input
+  type="radio"
+  name="track[track_type]"
+  value="bonus"
+  id="track_type_bonus"
+  <%= @track.track_type == "bonus" ? "checked" : "" %>>
+<label for="track_type_bonus">bonus</label>
+
+<br>
+<br>
+
+<label for="track_lyrics">Lyrics</label>
+<textarea id="track_lyrics"
+          name="track[lyrics]"><%= @track.lyrics %></textarea>
+
+  <br>
+  <br>
+  <input type="submit" value="Submit">
+
+</form>
+
+<p>
+  <%= link_to "<< " + @album.name, album_url(@album) %>
+</p>

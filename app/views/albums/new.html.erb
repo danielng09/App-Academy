@@ -1,0 +1,51 @@
+<h1>Create a new album!</h1>
+
+<form action="<%= albums_url %>" method="post">
+  <input type="hidden" name="_method" value="post">
+
+  <label for="album_name">Name</label>
+  <input type="text"
+         id="album_name"
+         name="album[name]"
+         value="<%= @album.name %>">
+<br>
+<br>
+  <label for="album_band">Band</label>
+  <select name ="album[band_id]" id="album_id">
+  <% @bands.each do |band| %>
+    <option
+      <%= band.id == @band.id ? "selected" : "" %>
+      value="<%= band.id %>">
+      <%= band.name %>
+    </option>
+  <% end %>
+</select>
+
+<br>
+<br>
+Record Type
+<input
+  type="radio"
+  name="album[record_type]"
+  value="live"
+  id="record_type_live"
+  <%= @album.record_type == "live" ? "checked" : "" %>>
+<label for="record_type_live">live</label>
+
+<input
+  type="radio"
+  name="album[record_type]"
+  value="studio"
+  id="record_type_studio"
+  <%= @album.record_type == "studio" ? "checked" : "" %>>
+<label for="record_type_studio">studio</label>
+
+  <br>
+  <br>
+  <input type="submit" value="Submit album">
+
+</form>
+
+<p>
+  <%= link_to "<< " + @band.name, band_url(@band) %>
+</p>

@@ -1,0 +1,32 @@
+<h1><%= @album.name %> Album</h1>
+
+<p>Record Type:<br>
+  <li><%= @album.record_type %></li>
+</p>
+<p>
+  <% if @album.tracks %>
+  Tracks:
+  <ul>
+    <% @album.tracks.each do |track| %>
+      <li>
+        <%= link_to track.name, track_url(track) %>
+      </li>
+    <% end %>
+  </ul>
+  <% end %>
+
+<p>
+  <%= button_to "Add new track", new_album_tracks_url(@album), method: "get" %>
+</p>
+
+<p>
+  <%= button_to "Edit", edit_album_url(@album), method: "get" %>
+</p>
+
+<p>
+  <%= button_to "Delete", album_url(@album), method: "delete" %>
+</p>
+
+<p>
+  <%= link_to "<< Band", band_url(@album.band) %>
+</p>
