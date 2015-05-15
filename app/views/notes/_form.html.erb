@@ -1,0 +1,10 @@
+<form action="<%= notes_url %>" method="POST">
+  <label for="note_body">Note</label>
+  <br>
+  <textarea id="body"
+            name="note[body]"><%= @note.body %></textarea>
+  <br>
+  <input type="hidden" name="note[track_id]" value="<%= @track.id %>">
+
+  <input type="submit" value="Create Note">
+</form>

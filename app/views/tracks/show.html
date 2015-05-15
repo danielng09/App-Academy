@@ -1,9 +1,15 @@
 <h1><%= @track.name %> Track</h1>
 
+<%= render "notes/form", track: @track, note: @note %>
+
 <% @track.attributes.each do |key, value| %>
   <p>
     <%= "#{key}: #{value}" %>
   </p>
+<% end %>
+
+<% @track.notes.each do |note| %>
+  <%= render 'notes/note', body: note.body %>
 <% end %>
 
 <p>

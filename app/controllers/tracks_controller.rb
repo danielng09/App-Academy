@@ -27,6 +27,7 @@ class TracksController < ApplicationController
   def show
     @track = Track.find(params[:id])
     @album = @track.album
+    @note = Note.new
     render :show
   end
 

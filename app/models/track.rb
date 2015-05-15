@@ -17,5 +17,5 @@ class Track < ActiveRecord::Base
             message: "%{value} is not a valid option" }
   belongs_to :album
   has_one :band, through: :album, source: :band
-
+  has_many :notes
 end
