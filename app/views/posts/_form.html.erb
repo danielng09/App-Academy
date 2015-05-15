@@ -1,0 +1,22 @@
+<% action= post.persisted? ? post_url(post) : posts_url %>
+<% method= post.persisted? ? "PATCH" : "POST" %>
+<% button_label= post.persisted? ? "Submit Changes!" : "Submit!" %>
+
+<form action="<%= action%>" method="POST">
+  <input type="hidden" name="_method" value="<%= method%>">
+  Title:<br>
+  <input type="text" name="post[title]" value="<%= post.title%>">
+  <br>
+  Url:
+  <br>
+  <input type="text" name="post[url]" value="<%= post.url%>">
+  <br>
+  Content:
+  <br>
+  <textarea name="post[content]"><%= post.content %></textarea>
+  <br>
+
+  <input type="hidden" name="post[author_id]" value="<%= current_user.id%>">
+  <input type="hidden" name="post[sub_id]" value="<%= post.sub.id%>">
+  <input type="submit" value="<%= button_label%>">
+</form>

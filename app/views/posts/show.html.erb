@@ -1,0 +1,6 @@
+<h1><%= @post.title %></h1>
+<ul>
+<% @post.attributes.each do |key, value| %>
+  <li><%= "#{key}: #{value}" %></li>
+<% end %>
+</ul>
