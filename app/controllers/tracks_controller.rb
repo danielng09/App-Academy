@@ -25,7 +25,7 @@ class TracksController < ApplicationController
   end
 
   def show
-    @track = Track.find(params[:id])
+    @track = Track.includes(:notes).where('tracks.id = ?', params[:id]).first
     @album = @track.album
     @note = Note.new
     render :show

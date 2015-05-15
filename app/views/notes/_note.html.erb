@@ -1,3 +1,10 @@
 <p>
-    body
+  <li>
+    <%= user.email %> says:
+    <br>
+    <%= note.body %>
+    <% if current_user == note.user %>
+      <%= button_to "Delete", note_url(note), method: "delete" %>
+    <% end  %>
+  </li>
 </p>
