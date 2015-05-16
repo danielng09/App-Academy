@@ -3,4 +3,17 @@
 <% @post.attributes.each do |key, value| %>
   <li><%= "#{key}: #{value}" %></li>
 <% end %>
+<% @post.subs.each do |sub|%>
+  <li><%= sub.title%></li>
+<% end %>
+
+<p>Comments</p>
+<ul>
+<% @comments.where(parent_comment_id: nil).each do |top_child_comment| %>
+  <li><%= render 'comments/comment', current_comment: top_child_comment %></li>
+<% end %>
 </ul>
+
+<p>
+<%= link_to "Reply!", new_post_comment_url(@post)%>
+</p>

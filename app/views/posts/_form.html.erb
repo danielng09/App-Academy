@@ -15,8 +15,14 @@
   <br>
   <textarea name="post[content]"><%= post.content %></textarea>
   <br>
-
+  Posted in:
+  <br>
+  <input type="hidden" name="post[sub_ids][]" value="">
+  <% @subs.each do |sub|%>
+    <input type="checkbox" name="post[sub_ids][]" value="<%=sub.id%>"
+     <%="checked" if post.subs.pluck(:id).include?(sub.id)%>>
+    <%= sub.title %><br>
+  <%end%>
   <input type="hidden" name="post[author_id]" value="<%= current_user.id%>">
-  <input type="hidden" name="post[sub_id]" value="<%= post.sub.id%>">
   <input type="submit" value="<%= button_label%>">
 </form>

@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
   validate :ensure_session_token
   after_initialize :ensure_session_token
   has_many :subs, foreign_key: :moderator_id
+  has_many :comments, foreign_key: :author_id
   attr_reader :password
 
 
