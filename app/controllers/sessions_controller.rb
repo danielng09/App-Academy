@@ -9,6 +9,7 @@ class SessionsController < ApplicationController
       log_in!(@user)
       redirect_to subs_url
     else
+      flash[:errors] = ["invalid password username combination"]
       redirect_to new_session_url
     end
   end

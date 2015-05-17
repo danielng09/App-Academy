@@ -9,8 +9,9 @@
 
 <p>Comments</p>
 <ul>
-<% @comments.where(parent_comment_id: nil).each do |top_child_comment| %>
-  <li><%= render 'comments/comment', current_comment: top_child_comment %></li>
+<% @all_comments.each do |top_child_comment| %>
+  <% next unless top_child_comment.parent_comment_id.nil? %>
+  <li><%= render 'comments/comment', current_comment: top_child_comment, all_comments: @all_comments %></li>
 <% end %>
 </ul>
 

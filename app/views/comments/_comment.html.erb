@@ -3,7 +3,8 @@ Posted by: <%= current_comment.author.email %> <br>
   <%= link_to "Reply!", new_post_comment_url(@post,
       parent_comment_id: current_comment.id)%>
 <ul>
-<% current_comment.child_comments.each do |child_comment| %>
-  <li> <%= render 'comments/comment', current_comment: child_comment %> </li>
+<% all_comments.each do |child_comment| %>
+  <% next unless child_comment.parent_comment_id == current_comment.id %>
+  <li> <%= render 'comments/comment', current_comment: child_comment, all_comments: all_comments %> </li>
 <% end %>
 </ul>

@@ -12,6 +12,7 @@ class SubsController < ApplicationController
     if @sub.save
       redirect_to sub_url(@sub)
     else
+      flash.now[:errors] = @sub.errors.full_messages
       render :new
     end
   end
@@ -21,6 +22,7 @@ class SubsController < ApplicationController
     if @sub.update(subs_params)
       redirect_to sub_url(@sub)
     else
+      flash.now[:errors] = @sub.errors.full_messages
       render :edit
     end
   end

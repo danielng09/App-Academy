@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :check_if_author, only: [:edit, :update]
+
   def new
     @subs = Sub.all
     @post = Post.new
@@ -8,17 +9,17 @@ class PostsController < ApplicationController
   def create
     @subs = Sub.all
     @post = Post.new(post_params)
-
     if @post.save
       redirect_to post_url(@post)
     else
+      flash.now[:errors] = @post.errors.full_messages
       render :new
     end
   end
 
   def show
     @post = Post.find(params[:id])
-    @comments = @post.comments
+    @all_comments = @post.comments.includes(:author)
   end
 
   def edit
@@ -32,6 +33,7 @@ class PostsController < ApplicationController
     if @post.update(post_params)
       redirect_to post_url(@post)
     else
+      flash.now[:errors] = @post.errors.full_messages
       render :edit
     end
   end
