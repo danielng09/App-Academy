@@ -16,11 +16,7 @@ module Phase5
     end
 
     def [](key)
-      if key.is_a?(String)
-        @params[key]
-      else
-        @params[key.to_s]
-      end
+      @params[key.to_s]
     end
 
     def to_s
