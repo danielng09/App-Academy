@@ -1,14 +1,4 @@
 // range
-// var range = function (start, end) {
-//   output = []
-//   if(start > end){
-//     return [];
-//   }
-//   else {
-//     output.push(start)
-//     return output.concat(range(start+1, end));
-//   }
-// };
 
 var range = function (start, end) {
   if(start === end){
@@ -18,7 +8,6 @@ var range = function (start, end) {
     return [start].concat(range(start + 1, end)) ;
   }
 };
-// console.log(range(1,5));
 
 //exponent
 function exponent (base, power) {
@@ -29,7 +18,6 @@ function exponent (base, power) {
     return base * exponent(base, power - 1);
   }
 }
-// console.log(exponent(5,3));
 
 //fibbonacci
 var fibbonacci = function (n) {
@@ -47,7 +35,6 @@ var fibbonacci = function (n) {
     return sequence;
   }
 };
-// console.log(fibbonacci(7));
 
 //binarySearch-
 function bsearch (array, target) {
@@ -68,50 +55,35 @@ function bsearch (array, target) {
     return median + 1 + binary;
   }
 }
-// console.log(bsearch([1, 2, 3], 1));
-// console.log(bsearch([2, 3, 4, 5], 3));
-// console.log(bsearch([2, 4, 6, 8, 10], 6));
-// console.log(bsearch([1, 3, 4, 5, 9], 5));
-// console.log(bsearch([1, 2, 3, 4, 5, 6], 6));
-// console.log(bsearch([1, 2, 3, 4, 5, 6], 0));
-// console.log(bsearch([1, 2, 3, 4, 5, 7], 6));
 
 //makeChange
 
 //mergeSort
-Array.prototype.mergeSort = function (merge) {
-  if(this.length <= 1) {
-    return this;
+var mergeSort = function (array) {
+  if(array.length < 2) {
+    return array;
+  } else {
+  var middle = Math.floor(array.length / 2);
+
+  var leftSide = mergeSort(array.slice(0, middle));
+  var rightSide = mergeSort(array.slice(middle));
+
+  return merge(leftSide, rightSide);
   }
-  var middle = Math.floor(this.length/2);
-  var leftSide = this.slice(0, middle);
-  var rightSide = this.slice(middle+1, this.length);
-  return merge(leftSide.mergeSort(merge), rightSide.mergeSort(merge));
 };
-// arrayOne = [1,3,5] => index 3
-// arrayTwo = [2,4,6] => index 2
-// output = [1,2,3,4,5]
-// output = [1,2,3,4,5,6]
 
-var merge = function (one, two) {
+var merge = function (arrayOne, arrayTwo) {
   var output = [];
-  var arrayOne = one.slice(0);
-  var arrayTwo = two.slice(0);
-  var indexOne = 0;
-  var indexTwo = 0;
 
-  while (indexOne < arrayOne.length && indexTwo < arrayTwo.length) {
-    if (arrayOne[indexOne] < arrayTwo[indexTwo]) {
+  while (arrayOne.length > 0 && arrayTwo.length > 0) {
+    if (arrayOne[0] < arrayTwo[0]) {
       output.push(arrayOne.shift());
-      indexOne += 1;
     }
     else {
       output.push(arrayTwo.shift());
-      indexTwo += 1;
     }
   }
-  return output.concat(arrayOne).concat(arrayTwo);
+  return output.concat(arrayOne, arrayTwo);
 };
 
-console.log([1,7,2,5,0,4].mergeSort(merge));
 //subsets

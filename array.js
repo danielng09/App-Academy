@@ -18,7 +18,7 @@ Array.prototype.twoSum = function() {
 
   for(var index1=0; index1 < this.length-1; index1++) {
     for(var index2=index1+1; index2 < this.length; index2++) {
-      if(this[index1] + this[index2] === 0) {
+      if (this[index1] + this[index2] === 0) {
         result.push([index1, index2]);
       }
     }
@@ -46,8 +46,8 @@ Array.prototype.transpose = function() {
   return transposedArray;
 };
 
-console.log([
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8]
-  ].transpose());
+// console.log([
+//     [0, 1, 2],
+//     [3, 4, 5],
+//     [6, 7, 8]
+//   ].transpose());
