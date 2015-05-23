@@ -6,11 +6,12 @@ var reader = readline.createInterface({
 
 
 var HanoiGame = function () {
-  stacks = [[3,2,1],[],[]];
+  var that = this;
+  this.stacks = [[3,2,1],[],[]];
 };
 
 HanoiGame.prototype.isWon = function () {
-  if (stacks[0].length < 1 && (stacks[1].length < 1 || stacks[2].length < 1)) {
+  if (this.stacks[0].length < 1 && (this.stacks[1].length < 1 || this.stacks[2].length < 1)) {
     return true;
   } else {
     return false;
@@ -19,9 +20,9 @@ HanoiGame.prototype.isWon = function () {
 
 HanoiGame.prototype.isValidMove = function(startTowerIdx, endTowerIdx) {
   if (startTowerIdx > 2 || startTowerIdx < 0 || endTowerIdx > 2 || endTowerIdx < 0) { return false };
-  var startStack = stacks[startTowerIdx];
+  var startStack = this.stacks[startTowerIdx];
   var startPiece = startStack[startStack.length-1];
-  var endStack = stacks[endTowerIdx];
+  var endStack = this.stacks[endTowerIdx];
   var endPiece = endStack[endStack.length-1];
   if (startStack.length > 0) {
     if (endPiece && startPiece < endPiece) {
@@ -37,7 +38,7 @@ HanoiGame.prototype.isValidMove = function(startTowerIdx, endTowerIdx) {
 
 HanoiGame.prototype.move = function(startTowerIdx, endTowerIdx) {
   if (this.isValidMove(startTowerIdx, endTowerIdx)) {
-    stacks[endTowerIdx].push(stacks[startTowerIdx].pop());
+    this.stacks[endTowerIdx].push(this.stacks[startTowerIdx].pop());
     return true;
   } else {
     return false;
@@ -45,7 +46,7 @@ HanoiGame.prototype.move = function(startTowerIdx, endTowerIdx) {
 };
 
 HanoiGame.prototype.printStack = function () {
-  var string = JSON.stringify(stacks);
+  var string = JSON.stringify(this.stacks);
   console.log(string);
 };
 
