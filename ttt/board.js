@@ -24,7 +24,7 @@ Board.prototype.print = function () {
   console.log(JSON.stringify(this.grid[0]));
   console.log(JSON.stringify(this.grid[1]));
   console.log(JSON.stringify(this.grid[2]));
-}
+};
 
 Board.prototype.won = function() {
   return (this.horizontal() || this.vertical() || this.diagonal());
@@ -32,7 +32,7 @@ Board.prototype.won = function() {
 
 Board.prototype.horizontal = function () {
   for ( var row = 0; row < 3; row++ ) {
-    var referencePiece = this.grid[row][0]
+    var referencePiece = this.grid[row][0];
     if (referencePiece === "_") {
       return false;
     }
@@ -41,17 +41,17 @@ Board.prototype.horizontal = function () {
       if (referencePiece !== this.grid[row][col]) {
         rowAllSame = false;
       }
-    };
+    }
     if (rowAllSame) {
       return true;
     }
-  };
+  }
   return false;
 };
 
 Board.prototype.vertical = function () {
   for ( var col = 0; col < 3; col++ ) {
-    var referencePiece = this.grid[0][col]
+    var referencePiece = this.grid[0][col];
     if (referencePiece === "_") {
       return false;
     }
@@ -60,11 +60,11 @@ Board.prototype.vertical = function () {
       if (referencePiece !== this.grid[row][col]) {
         colAllSame = false;
       }
-    };
+    }
     if (colAllSame) {
       return true;
     }
-  };
+  }
   return false;
 };
 

@@ -12,7 +12,7 @@ Game.prototype.run = function (completionCallBack) {
     this.message = false;
   }
   this.board.print();
-  console.log("\nIt is " + this.color + "'s turn:\n")
+  console.log("\nIt is " + this.color + "'s turn:\n");
   this.prompt(this.board.place.bind(this.board), this.color, completionCallBack);
 };
 
@@ -44,7 +44,7 @@ Game.prototype.finishTurn = function (completionCallBack) {
     this.changeColor();
     this.run(completionCallBack);
   }
-}
+};
 
 Game.prototype.changeColor = function () {
   if (this.color === "X") {
@@ -52,6 +52,6 @@ Game.prototype.changeColor = function () {
   } else {
     this.color = "X";
   }
-}
+};
 
 module.exports = Game;
