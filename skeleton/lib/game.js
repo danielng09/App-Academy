@@ -8,13 +8,21 @@ var Board = require("./board.js");
 function Game () {
   this.board = new Board();
   this.turn = "black";
-};
+  this.symbol = "O";
+  this.invalid = false;
+}
 
 /**
  * Flips the current turn to the opposite color.
  */
 Game.prototype._flipTurn = function () {
-  this.turn = (this.turn == "black") ? "white" : "black";
+  if (this.turn == "black") {
+    this.turn = "white";
+    this.symbol = "X";
+  } else {
+     this.turn = "black";
+     this.symbol = "O";
+  }
 };
 
 // Dreaded global state!
@@ -41,16 +49,21 @@ Game.prototype.play = function () {
  * attempts to make the play.
  */
 Game.prototype.playTurn = function (callback) {
+  console.log('\033[2J');
+  if (this.invalid) {
+    console.log("Invalid move!");
+    this.invalid = false;
+  }
   this.board.print();
   rlInterface.question(
-    this.turn + ", where do you want to move?",
+    this.turn + " (" + this.symbol + ") " + ", where do you want to move?",
     handleResponse.bind(this)
   );
 
   function handleResponse (answer) {
     var pos = JSON.parse(answer);
     if (!this.board.validMove(pos, this.turn)) {
-      console.log("Invalid move!");
+      this.invalid = true;
       this.playTurn(callback);
       return;
     }
@@ -78,3 +91,7 @@ Game.prototype.runLoop = function (overCallback) {
 };
 
 module.exports = Game;
+
+var game = new Game();
+game.play();
+game.runLoop();
