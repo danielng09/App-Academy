@@ -44,7 +44,7 @@ body {
   border-right: 1px solid #D6D6D6;
 }
 
-.header-list li {
+.header-list > li {
   position: relative;
   float: left;
 }
@@ -54,31 +54,28 @@ body {
   border-radius: 100%;
   width: 10px;
   height: 10px;
-  padding-left: 6px;
-  padding-right: 6px;
-  padding-top: 1px;
-  padding-bottom: 1px;
+  padding: 1px 6px;
   font-size: 14px;
 }
 
-#notification {
+.notification {
   position: relative;
 }
 
-#notification:hover .badge {
+.notification:hover .badge {
   background-color: red;
 }
 
-#notification:hover #notification-list {
+.notification:hover .notification-list {
   display: block;
 }
 
-#notification-list {
+.notification-list {
   position: absolute;
   display: none;
 }
 
-#notification:hover #notification-list li {
+.notification-list > li {
   text-align:left;
   white-space: nowrap;
   width: 236px;
@@ -86,12 +83,14 @@ body {
   color: black;
   background-color: white;
   clear: both;
-  display: block;
-  border-left: 1px solid #D6D6D6;
   border-bottom: 1px solid #D6D6D6;
   border-right: 1px solid #D6D6D6;
 }
 
-#notification-list a:hover {
+.notification:hover .notification-list > li {
+  display: block;
+}
+
+.notification-list a:hover {
   background-color: #eee
 }
