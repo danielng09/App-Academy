@@ -20,7 +20,7 @@ body {
 .header a {
   display: block;
   padding: 10px 20px;
-  border-left: 1px solid #D6D6D6;
+  border-left: 1px solid #aaa;
 }
 
 .header a:hover {
@@ -36,61 +36,15 @@ body {
 .header-logo {
   font-weight: 700;
   float: left;
-  border-right: 1px solid #D6D6D6;
+  border-right: 1px solid #aaa;
 }
 
 .header-list {
   float: right;
-  border-right: 1px solid #D6D6D6;
+  border-right: 1px solid #aaa;
 }
 
 .header-list > li {
   position: relative;
   float: left;
-}
-
-.badge {
-  background-color: black;
-  border-radius: 100%;
-  width: 10px;
-  height: 10px;
-  padding: 1px 6px;
-  font-size: 14px;
-}
-
-.notification {
-  position: relative;
-}
-
-.notification:hover .badge {
-  background-color: red;
-}
-
-.notification:hover .notification-list {
-  display: block;
-}
-
-.notification-list {
-  position: absolute;
-  display: none;
-}
-
-.notification-list > li {
-  text-align:left;
-  white-space: nowrap;
-  width: 236px;
-  font-size: 14px;
-  color: black;
-  background-color: white;
-  clear: both;
-  border-bottom: 1px solid #D6D6D6;
-  border-right: 1px solid #D6D6D6;
-}
-
-.notification:hover .notification-list > li {
-  display: block;
-}
-
-.notification-list a:hover {
-  background-color: #eee
 }
