@@ -1,0 +1,31 @@
+h1 {
+  text-align: center;
+}
+
+.row {
+  height: 24px;
+  width: 480px;
+  margin: 0 auto;
+  border-left: 2px solid black;
+  border-right: 2px solid black;
+}
+
+.row:last-child {border-bottom: 2px solid black;}
+.row:first-child {border-top: 2px solid black;}
+
+.cell {
+  background-color: #ccc;
+  border: 2px solid black;
+  float: left;
+  width: 20px;
+  height: 20px;
+}
+
+.content {
+  width: 480px;
+  margin: 0 auto;
+}
+
+.snake {
+  background-color: blue;
+}
