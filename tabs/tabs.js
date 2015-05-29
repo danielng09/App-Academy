@@ -17,10 +17,10 @@ $.Tabs.prototype.clickTab = function(event) {
 
 $.Tabs.prototype.activateTab = function(event) {
   $('.transitioning').removeClass('transitioning');
-  var activeTab = this.$contentTabs.find(this.$activeLink.data('target'));
+  var activeTab = this.$contentTabs.find(this.$activeLink.data('target'))
+                      .addClass('active').addClass('transitioning');
   this.$activeLink = this.$contentTabs.children(".active");
   setTimeout(function() {
-    activeTab.addClass('active').addClass('transitioning');
     activeTab.removeClass('transitioning');
   }, 0);
 };

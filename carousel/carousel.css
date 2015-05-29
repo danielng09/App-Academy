@@ -1,0 +1,33 @@
+.carousel {
+  height: 300px;
+  width: 300px;
+  position: relative;
+  margin: 0 auto;
+  /*background-color: grey;*/
+}
+
+.items {
+  height: 100%;
+  width: 100%;
+}
+
+.items img{
+  display: none;
+}
+
+.items .active {
+  position: absolute;
+  left: 0%;
+  display: block;
+  transition: left 50ms linear;
+}
+
+.active.left {
+  left: -100%;
+  transition: left 50ms linear;
+}
+
+.active.right {
+  left: 100%;
+  transition: left 50ms linear;
+}
