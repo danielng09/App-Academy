@@ -3,17 +3,35 @@ window.Pokedex.Models = {};
 window.Pokedex.Collections = {};
 
 Pokedex.Models.Pokemon = Backbone.Model.extend({
-  "urlRoot": "/pokemon"
+  "urlRoot": "/pokemon",
+  "parse": function(resp){
+    if (resp.toys){
+      this.toys().set(resp.toys); //set takes in an array of objects and adds it to collection
+      delete resp.toys; //so we work with the collection as opposed to a bunch of javascript objects
+    }
+    return resp;
+  },
+  "toys": function(){
+    if (!this._toys){
+      this._toys = new Pokedex.Collections.PokemonToys({pokemon: this}); //we can pass in the pokemon if we want to call toy.pokemon
+    }
+    return this._toys;
+  }
 });
 
-Pokedex.Models.Toy = null; // WRITE ME IN PHASE 2
+Pokedex.Models.Toy = Backbone.Model.extend({
+  "urlRoot": "/toys"
+}); // WRITE ME IN PHASE 2
 
 Pokedex.Collections.Pokemon = Backbone.Collection.extend({
   "url": "/pokemon",
   "model": Pokedex.Models.Pokemon
 }); // WRITE ME
 
-Pokedex.Collections.PokemonToys = null; // WRITE ME IN PHASE 2
+Pokedex.Collections.PokemonToys = Backbone.Collection.extend({
+  // "url": "/pokemon" + pokemon.id,
+  "model": Pokedex.Models.Toy
+}); // WRITE ME IN PHASE 2
 
 window.Pokedex.Test = {
   testShow: function (id) {

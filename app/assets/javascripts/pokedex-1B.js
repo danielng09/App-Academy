@@ -1,6 +1,7 @@
 Pokedex.RootView.prototype.renderPokemonDetail = function (pokemon) {
-  $('.pokeDetails').remove();
-  var $ul= $("<ul>").addClass("pokeDetails");
+  $('.detail').remove();
+  var that = this;
+  var $ul= $("<ul>").addClass("detail");
   jQuery.each(pokemon.attributes, function(key, val) {
     if (key === "image_url"){
       $ul.prepend($('<img>').attr("src", val));
@@ -11,8 +12,11 @@ Pokedex.RootView.prototype.renderPokemonDetail = function (pokemon) {
       $ul.append($('<li>').text(key + ": " + val));
     }
   }
-
 );
+  pokemon.toys().forEach(function(toy) {
+    $ul.append(that.addToyToList(toy));
+  });
+
   this.$pokeDetail.append($ul);
 };
 
