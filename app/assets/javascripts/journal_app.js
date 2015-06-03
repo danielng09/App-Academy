@@ -2,12 +2,10 @@ window.JournalApp = {
   Models: {},
   Collections: {},
   Views: {},
-  Routers: {},
-  initialize: function() {
-    alert('Hello from Backbone!');
-  }
+  Routers: {}
 };
 
 $(document).ready(function(){
-  JournalApp.initialize();
+  var $rootEl = $('.journal-app');
+  // window.JournalApp.posts = new JournalApp.Collections.Posts({ el: $rootEl });
 });
