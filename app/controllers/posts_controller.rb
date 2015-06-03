@@ -9,4 +9,10 @@ class PostsController < ApplicationController
     render json: @posts
   end
 
+  def destroy
+    @post = Post.find(params[:id])
+    @post.destroy
+    render json: @post
+  end
+
 end
