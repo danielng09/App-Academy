@@ -1,0 +1,10 @@
+<form>
+  <label>Title
+    <input type="text" name="post[title]" value="<%= post.escape('title') %>">
+  </label>
+
+  <label>Body
+    <input type="text" name="post[body]" value="<%= post.escape('body') %>">
+  </label>
+  <button type="submit">Edit!</button>
+</form>

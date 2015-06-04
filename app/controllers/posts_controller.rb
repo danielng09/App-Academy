@@ -1,3 +1,5 @@
+require 'byebug'
+
 class PostsController < ApplicationController
   def show
     @post = Post.find(params[:id])
@@ -15,4 +17,19 @@ class PostsController < ApplicationController
     render json: @post
   end
 
+  def update
+    @post = Post.find(params[:id])
+    p @post
+    if @post.update(post_params)
+      render json: @post
+    else
+      render json: @post.errors.full_messages
+    end
+  end
+
+  private
+
+  def post_params
+    params.require(:post).permit(:title, :body)
+  end
 end
