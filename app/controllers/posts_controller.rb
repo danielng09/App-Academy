@@ -19,8 +19,16 @@ class PostsController < ApplicationController
 
   def update
     @post = Post.find(params[:id])
-    p @post
     if @post.update(post_params)
+      render json: @post
+    else
+      render json: @post.errors.full_messages
+    end
+  end
+
+  def create
+    @post = Post.new(post_params)
+    if @post.save
       render json: @post
     else
       render json: @post.errors.full_messages

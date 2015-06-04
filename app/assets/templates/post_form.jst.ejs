@@ -6,5 +6,9 @@
   <label>Body
     <input type="text" name="post[body]" value="<%= post.escape('body') %>">
   </label>
-  <button type="submit">Edit!</button>
+  <% if ( post.isNew() ) { %>
+    <button class="create-button" type="submit">Create!</button>
+  <% } else { %>
+    <button class="edit-button" type="submit">Edit!</button>
+  <% } %>
 </form>
