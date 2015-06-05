@@ -1,4 +1,4 @@
-NewsReader.Views.FeedShowItem = Backbone.View.extend({
+NewsReader.Views.Entry = Backbone.View.extend({
   template: JST['feeds/showItem'],
 
   initialize: function () {

@@ -24,7 +24,6 @@ NewsReader.Views.FeedIndexItem = Backbone.View.extend({
 
   destroyIndexItem: function (event) {
     event.preventDefault();
-    console.log("in the destroyIndexItem function");
     this.model.destroy();
   }
 

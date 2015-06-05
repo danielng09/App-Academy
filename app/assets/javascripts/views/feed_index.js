@@ -1,21 +1,27 @@
-NewsReader.Views.FeedsIndex = Backbone.View.extend({
+NewsReader.Views.FeedsIndex = Backbone.CompositeView.extend({
   template: JST['feeds/index'],
 
   initialize: function (options) {
-    this.$el = options.$rootEl;
-    this.listenTo(this.collection, 'sync remove add', this.render);
+    this.$el = $($.find('#sidebar'));
+    this.listenTo(this.collection, 'add', this.addFeedIndexItemView);
+    this.listenTo(this.collection, 'sync add', this.render);
+
+    this.collection.each(function (feed) {
+      this.addFeedIndexItemView(feed);
+    }.bind(this));
+  },
+
+  addFeedIndexItemView: function (feed) {
+    event.preventDefault();
+    var subview = new NewsReader.Views.FeedIndexItem({ model: feed });
+    this.addSubview('.feed-list', subview);
   },
 
   render: function () {
-    var content = this.template;
+    var content = this.template();
     this.$el.html(content);
-    this.collection.each(function (feed) {
-      var indexItem = new NewsReader.Views.FeedIndexItem({
-        model: feed
-      });
-      this.$('.feed-list').append(indexItem.render().$el);
-    }.bind(this));
 
+    this.attachSubviews();
     return this;
   }
 

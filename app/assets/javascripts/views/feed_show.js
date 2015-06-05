@@ -1,33 +1,31 @@
-NewsReader.Views.FeedShow = Backbone.View.extend({
+NewsReader.Views.FeedShow = Backbone.CompositeView.extend({
   template: JST['feeds/show'],
   events: {
     'click .refresh-button': 'refreshFeed'
   },
 
   initialize: function () {
+    this.collection = this.model.entries();
     this.listenTo(this.model, 'sync', this.render);
+    this.listenTo(this.collection, 'add', this.addEntryView);
+    this.collection.each(this.addEntryView.bind(this));
+  },
+
+  addEntryView: function (entry) {
+    var subview = new NewsReader.Views.Entry({ model: entry });
+    this.addSubview('.entry-list', subview);
   },
 
   render: function () {
     var content = this.template({ feed: this.model });
     this.$el.html(content);
-
-    var currentView = this;
-
-    this.model.entries().each(function (entry) {
-      var entryView = new NewsReader.Views.FeedShowItem({
-        model: entry
-      });
-      currentView.$el.find('.entry-list').append(entryView.render().$el);
-    });
+    this.attachSubviews();
 
     return this;
   },
 
   refreshFeed: function (event) {
-    event.preventDefault();
     this.model.fetch();
-    this.$el.append("<script>alert('refreshing...')</script>");
   }
 
 });
