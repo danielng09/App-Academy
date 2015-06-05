@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: feeds
+#
+#  id         :integer          not null, primary key
+#  url        :string(255)      not null
+#  title      :string(255)      not null
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 require 'open-uri'
 
 class Feed < ActiveRecord::Base
@@ -39,7 +50,7 @@ class Feed < ActiveRecord::Base
   end
 
   def latest_entries
-    if updated_at <= 5.seconds.ago
+    if updated_at <= 10.seconds.ago
       reload
     end
 

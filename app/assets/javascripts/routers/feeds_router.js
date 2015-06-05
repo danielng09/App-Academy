@@ -11,7 +11,8 @@ NewsReader.Routers.FeedsRouter = Backbone.Router.extend({
   index: function () {
     NewsReader.feeds.fetch();
     var view = new NewsReader.Views.FeedsIndex ({
-      collection: NewsReader.feeds
+      collection: NewsReader.feeds,
+      $rootEl: $('#sidebar')
     });
     this.$rootEl.html(view.render().$el);
   },
