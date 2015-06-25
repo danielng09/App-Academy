@@ -1,0 +1,33 @@
+<h1> <%= @cat.name %> </h1>
+<%= link_to "Edit me!", edit_cat_url(@cat)%>
+<ul>
+<% @cat.attributes.each do |key, value| %>
+  <li><%= "#{key} : #{value} "%> </li>
+<% end %>
+</ul>
+<h3>This cat has been requested for the following dates</h3>
+<ul>
+<% @cat.cat_rental_requests.order(:start_date).each do |request| %>
+  <li>
+    <%= "Dates: #{request.start_date} - #{request.end_date}   Status: #{request.status}"%>
+
+    <!-- <% if request.status == 'PENDING' %> -->
+      <form method="post" action="<%= cat_rental_request_url(request) %>" class="button_to">
+        <input type="hidden" name="_method" value="patch">
+        <input name="cat_rental_request[status]" value="APPROVE" type="submit">
+      </form>
+
+      <form method="post" action="<%= cat_rental_request_url(request) %>" class="button_to">
+        <input type="hidden" name="_method" value="patch">
+        <input name="cat_rental_request[status]" value="DENY" type="submit">
+      </form>
+    <!-- <% end %> -->
+
+  </li>
+
+<% end %>
+</ul>
+
+
+
+<%= link_to "See other cats", cats_path %>
