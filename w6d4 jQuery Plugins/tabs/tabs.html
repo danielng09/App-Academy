@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Cool Website</title>
+    <script src="./jquery-1.11.3.js"></script>
+    <script src="./tabs.js"></script>
+    <link href="./tabs.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.17.2/build/cssreset/cssreset-min.css">
+  </head>
+
+  <script>
+    $(function() {
+      $('.tabs').tabs();
+    });
+  </script>
+
+  <body>
+
+    <ul class='tabs' data-content-tabs="#content-tabs">
+      <li><a data-target="#chihuahua" href="javascript:void(0)">Chihuahua</a></li>
+      <li><a data-target="#golden-retriever" href="javascript:void(0)">Golden Retriever</a></li>
+      <li><a data-target="#pitbulls" href="javascript:void(0)">Pitbull</a></li>
+
+      <div id="content-tabs">
+        <div class="tab-pane" id="chihuahua">
+          <p>I love Chihuahuas, they are so small and cute!</p>
+        </div>
+        <div class="tab-pane" id="golden-retriever">
+          <p>Golden retrievers are better than chihuahuas</p>
+        </div>
+        <div class="tab-pane" id="pitbulls">
+          <p>Everyone hates pitbulls!</p>
+        </div>
+      </div>
+
+    </ul>
+
+    <script>
+      $('.tab-pane').eq(0).addClass('active');
+      $('ul').children().eq(0).addClass('active');
+    </script>
+  </body>
+</html>
