@@ -1,0 +1,37 @@
+.content {
+  width: 750px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.pile {
+  position: relative;
+  border-bottom: 15px solid black;
+  height: 400px;
+  width: 200px;
+  float: left;
+  margin: 0px 25px;
+}
+
+.disc-container {
+  padding: 0;
+  position: absolute;
+  bottom: -15px;
+  width: 200px;
+}
+
+.disc {
+  color: brown;
+  height: 40px;
+  margin: 15px auto;
+  background-color: blue;
+  border: 2px solid black;
+}
+
+.clicked {
+  border-bottom: 15px green solid;
+}
+
+.pile:hover {
+  cursor: pointer;
+}
