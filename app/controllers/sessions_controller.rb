@@ -14,10 +14,9 @@ class SessionsController < ApplicationController
       log_in_user!(user)
       redirect_to bands_url
     else
-      flash.now[:errors] = "Invalid user and password combination"
+      flash.now[:errors] = ["Invalid user and password combination"]
       render :new
     end
-
   end
 
   def destroy

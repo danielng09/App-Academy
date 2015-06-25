@@ -1,6 +1,6 @@
 class AlbumsController < ApplicationController
   before_action :redirect_to_sign_up_unless_signed_in
-  
+
   def new
     @album = Album.new
     @band = Band.find(params[:band_id])

@@ -40,8 +40,12 @@ class TracksController < ApplicationController
 
   def update
     @track = Track.find(params[:id])
-    @track.update!(track_params)
-    redirect_to @track
+    if @track.update!(track_params)
+      redirect_to @track
+    else
+      flash.now[:errors] = @track.errors.full_messages
+      render :edit
+    end
   end
 
   def destroy

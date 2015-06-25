@@ -7,6 +7,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+
 <% if current_user %>
   <p>Account: <%= current_user.email %></p>
   <%= button_to "Sign Out", session_url, method: "delete" %>
@@ -14,7 +15,11 @@
   <p> <%= link_to "Sign in!", new_session_url %>
 <% end %>
 
-<% flash[:notice] %>
+<% if flash[:errors] %>
+  <% flash[:errors].each do |error| %>
+    <%= error %>
+  <% end %>
+<% end %>
 
 <%= yield %>
 

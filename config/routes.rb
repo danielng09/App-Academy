@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :users, only: [:create, :new, :show, :index]
+  resources :users, only: [:create, :new]
   resource :session, only: [:new, :create, :destroy]
 
   resources :bands do
@@ -14,5 +14,4 @@ Rails.application.routes.draw do
 
   resources :notes, only: [:create, :destroy]
 
-  root to: 'users#index'
 end

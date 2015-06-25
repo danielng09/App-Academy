@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   # protect_from_forgery with: :exception
   helper_method :current_user
+  helper_method :ugly_lyrics
 
   def log_in_user!(user)
     token = user.reset_session_token!
@@ -36,4 +37,10 @@ class ApplicationController < ActionController::Base
       redirect_to bands_url
     end
   end
+
+  def ugly_lyrics(lyrics)
+    music_symol = "&#9835;"
+    
+  end
+
 end

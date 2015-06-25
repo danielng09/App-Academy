@@ -8,11 +8,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      flash[:notice] = "You've successfully created a user!"
       log_in_user!(@user)
       redirect_to user_url(@user)
     else
-      fail
       flash.now[:errors] = @user.errors.full_messages
       render :new
     end
