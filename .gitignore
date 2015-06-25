@@ -6,6 +6,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 *.rbc
 capybara-*.html
 .rspec
@@ -102,3 +103,6 @@ bower.json
 !/log/.keep
 /tmp
 >>>>>>> 21901a96eedbc00bbbb932d3253439f60d19b072
+=======
+*.log
+>>>>>>> 7e7f973ce60d610bb3aa14aebe1d635066129893
