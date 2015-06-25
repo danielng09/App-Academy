@@ -1,0 +1,22 @@
+div.list {
+  float: left;
+  background: rgba(0, 0, 0, 0);
+  border: white solid 1px;
+  border-radius: 15px;
+  margin: 0 25px;
+  width: 200px;
+  min-height: 400px;
+  position: relative;
+}
+
+div.list.new-list {
+  padding: 10px 12px;
+}
+
+div.list:hover button.list-hover {
+  display: block;
+}
+
+button.list-hover {
+  display: none;
+}

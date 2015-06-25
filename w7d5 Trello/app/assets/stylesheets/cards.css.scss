@@ -1,0 +1,27 @@
+div.card {
+  height: 30px;
+  border: white 1px solid;
+  background: rgba(0, 0, 0, 0);
+  border-radius: 5px;
+  padding: 5px 15px;
+  margin: 10px 10px;
+}
+
+form.new-card {
+  position: absolute;
+  bottom: 5px;
+  padding: 0 15px;
+}
+
+div.card:hover button.card-hover {
+  display: block;
+}
+
+button.card-hover {
+  display: none;
+}
+
+.new-card > input {
+  background: rgba(0, 0, 0, 0);
+  color: white;
+}
