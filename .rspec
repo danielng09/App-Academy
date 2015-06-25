@@ -1,7 +1,11 @@
 --color
 <<<<<<< HEAD
+<<<<<<< HEAD
 --format documentation
 =======
 --require spec_helper
 --format documentation
 >>>>>>> 21901a96eedbc00bbbb932d3253439f60d19b072
+=======
+--format documentation
+>>>>>>> bfb323ff5d8d168ec472b47dc7e2df80381a0674
