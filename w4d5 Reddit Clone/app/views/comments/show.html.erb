@@ -1,0 +1,11 @@
+<h2>comment by <%= @comment.author.email %></h2>
+<br>
+Replies:
+<ul>
+<% @child_comments.each do |comment| %>
+  <li>Posted by: <%= comment.author.email %> <br>
+    <%= comment.content %> </li>
+<% end %>
+</ul>
+
+<%= render 'comment', parent_comment_id: @comment.id, post_id: @comment.post_id %>

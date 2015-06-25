@@ -1,0 +1,9 @@
+Posted by: <%= current_comment.author.email %> <br>
+  <%= current_comment.content %>
+  <%= link_to "Reply!", new_post_comment_url(@post,
+      parent_comment_id: current_comment.id)%>
+<ul>
+<% all_comments[current_comment.id].each do |child_comment| %>
+  <li> <%= render 'comments/comment', current_comment: child_comment, all_comments: all_comments %></li>
+<% end %>
+</ul>

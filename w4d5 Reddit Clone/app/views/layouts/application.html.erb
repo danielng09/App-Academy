@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>RedditApp</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <% if current_user %>
+    Logged in as <%= current_user.email %>
+    <%= link_to "Log Out", session_url, method:"delete" %>
+  <% else %>
+    <%= link_to "Sign In", new_session_url %>
+  <% end %>
+
+  <br>
+  <br>
+  <% if flash[:errors] %>
+    <% flash[:errors].each do |error| %>
+      <%= error %>
+    <% end %>
+  <% end %>
+
+<%= yield %>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+<% action= sub.persisted? ? sub_url(sub) : subs_url %>
+<% method= sub.persisted? ? "PATCH" : "POST" %>
+<% button_label= sub.persisted? ? "Submit Changes!" : "Submit!" %>
+
+<form action="<%= action%>" method="POST">
+  <input type="hidden" name="_method" value="<%= method%>">
+  Title:<br>
+  <input type="text" name="sub[title]" value="<%= sub.title%>">
+  <br>
+  Description:
+  <br>
+  <input type="text" name="sub[description]" value="<%= sub.description%>">
+  <br>
+  <input type="hidden" name="sub[moderator_id]" value="<%= current_user.id%>">
+  <input type="submit" value="<%= button_label%>">
+</form>
